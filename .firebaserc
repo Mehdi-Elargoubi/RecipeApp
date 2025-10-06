@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "devopsapi-eilco": {
+      "hosting": {
+        "devopsapi-eilco": [
+          "devopsapi-eilco"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "devopsapi-eilco"
+  }
+}

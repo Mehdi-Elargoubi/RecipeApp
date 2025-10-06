@@ -98,6 +98,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "devopsapi-eilco:build:production",
+              "serveTarget": "devopsapi-eilco:serve:production"
+            },
+            "development": {
+              "buildTarget": "devopsapi-eilco:build:development",
+              "serveTarget": "devopsapi-eilco:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
