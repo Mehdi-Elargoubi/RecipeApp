@@ -1,28 +1,22 @@
-<p>dashboard works!</p>
 <div class="dashboard-container">
+  <h2>🍽️ Recettes du monde</h2>
 
-  <div class="welcome-box">
-    <h1>Bienvenue sur World Recipes 🌍</h1>
+  <div *ngIf="loading" class="loading">
+    Chargement des recettes...
+  </div>
 
-    <p class="subtitle">
-      Découvrez des recettes du monde entier, explorez les saveurs,  
-      et laissez l’IA vous proposer des idées à partir de vos ingrédients !
-    </p>
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
 
-    <p *ngIf="userEmail" class="connected-msg">
-      Connecté en tant que : <strong>{{ userEmail }}</strong>
-    </p>
+  <div class="grid" *ngIf="!loading && !error">
+    <div class="card" *ngFor="let meal of meals">
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+      <h3>{{ meal.strMeal }}</h3>
+      <p><strong>Catégorie:</strong> {{ meal.strCategory }}</p>
+      <p><strong>Origine:</strong> {{ meal.strArea }}</p>
+      <button (click)="showInstructions(meal.strInstructions)">Voir les étapes</button>
 
-    <div class="action-buttons">
-      <button routerLink="/recipes">Voir les recettes</button>
-      <button routerLink="/favorites">Mes favoris</button>
-      <button routerLink="/ai-chef">Chef IA</button>
     </div>
   </div>
-
-  <div class="hero-image">
-    <img src="https://img.freepik.com/free-vector/flat-design-food-frame_23-2149336130.jpg"
-         alt="Cuisine du monde">
-  </div>
-
 </div>
