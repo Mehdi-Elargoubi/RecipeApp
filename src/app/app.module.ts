@@ -36,7 +36,8 @@ import { HttpClientModule } from '@angular/common/http';  // ⭐ IMPORTANT
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    
+    FormsModule,
+    ReactiveFormsModule,
     
 
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),

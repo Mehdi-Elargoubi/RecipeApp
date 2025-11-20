@@ -1,9 +1,10 @@
 <div class="dashboard-container">
 
-  <!-- Barre de recherche -->
+  <!-- Barre de recherche en temps réel -->
   <div class="search-bar">
-    <input type="text" [(ngModel)]="searchName" placeholder="Rechercher une recette par nom" />
-    <button (click)="searchMeals()">Rechercher</button>
+    <input type="text" 
+           placeholder="Rechercher une recette par nom"
+           (input)="onSearchInput($event)" />
   </div>
 
   <!-- Affichage loading / erreur -->
