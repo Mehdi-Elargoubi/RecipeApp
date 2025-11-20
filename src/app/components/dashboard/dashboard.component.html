@@ -1,22 +1,31 @@
 <div class="dashboard-container">
-  <h2>🍽️ Recettes du monde</h2>
 
-  <div *ngIf="loading" class="loading">
-    Chargement des recettes...
+  <!-- Barre de recherche -->
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="searchName" placeholder="Rechercher une recette par nom" />
+    <button (click)="searchMeals()">Rechercher</button>
   </div>
 
-  <div *ngIf="error" class="error">
-    {{ error }}
-  </div>
+  <!-- Affichage loading / erreur -->
+  <div *ngIf="loading" class="loading">Chargement des recettes...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
 
-  <div class="grid" *ngIf="!loading && !error">
-    <div class="card" *ngFor="let meal of meals">
-      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+  <!-- Liste des recettes -->
+  <div class="meals-container">
+    <div class="meal-card" *ngFor="let meal of meals">
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal" />
       <h3>{{ meal.strMeal }}</h3>
-      <p><strong>Catégorie:</strong> {{ meal.strCategory }}</p>
-      <p><strong>Origine:</strong> {{ meal.strArea }}</p>
-      <button (click)="showInstructions(meal.strInstructions)">Voir les étapes</button>
+      <p><strong>Catégorie :</strong> {{ meal.strCategory }}</p>
+      <p><strong>Origine :</strong> {{ meal.strArea }}</p>
 
+      <h4>Ingrédients :</h4>
+      <ul>
+        <li *ngFor="let ing of meal.ingredients">{{ ing.measure }} {{ ing.name }}</li>
+      </ul>
+
+      <button (click)="showInstructions(meal.strInstructions)">Voir les étapes</button>
+      <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank">Voir la vidéo</a>
     </div>
   </div>
+
 </div>

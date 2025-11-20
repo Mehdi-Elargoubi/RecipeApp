@@ -19,17 +19,17 @@ export class ApiService {
     );
   }
 
+  // Chercher par première lettre
+  searchMealByFirstLetter(letter: string): Observable<Meal[]> {
+    return this.http.get<any>(`${this.baseUrl}/search.php?f=${letter}`).pipe(
+      map(res => res.meals?.map(this.mapMeal) || [])
+    );
+  }
+
   // Liste aléatoire
   getRandomMeal(): Observable<Meal> {
     return this.http.get<any>(`${this.baseUrl}/random.php`).pipe(
       map(res => this.mapMeal(res.meals[0]))
-    );
-  }
-
-  // Filtrer par catégorie
-  filterByCategory(category: string): Observable<Meal[]> {
-    return this.http.get<any>(`${this.baseUrl}/filter.php?c=${category}`).pipe(
-      map(res => res.meals || [])
     );
   }
 
@@ -40,16 +40,17 @@ export class ApiService {
     );
   }
 
-  // Mapper la réponse API en format Meal
+  // Mapper la réponse API en format Meal avec ingrédients + mesures
   private mapMeal(raw: any): Meal {
     const ingredients: Ingredient[] = [];
     for (let i = 1; i <= 20; i++) {
-      const name = raw[`strIngredient${i}`];
-      const measure = raw[`strMeasure${i}`];
-      if (name && name.trim()) {
-        ingredients.push({ name, measure });
+      const name = raw[`strIngredient${i}`]?.trim();
+      const measure = raw[`strMeasure${i}`]?.trim();
+      if (name && name !== '') {
+        ingredients.push({ name, measure: measure || '' });
       }
     }
+
     return {
       idMeal: raw.idMeal,
       strMeal: raw.strMeal,

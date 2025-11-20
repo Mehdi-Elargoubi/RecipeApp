@@ -14,31 +14,14 @@ export class DashboardComponent implements OnInit {
   meals: Meal[] = [];
   loading: boolean = true;
   error: string | null = null;
-
+  searchName: string = ''; 
+  
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
     this.loadMeals();
   }
 
-  // loadMeals() {
-  //   this.loading = true;
-  //   this.http.get("https://www.themealdb.com/api/json/v1/1/search.php?s=")
-  //     .subscribe({
-  //       next: (data: any) => {
-  //         this.meals = data.meals || [];
-  //         this.loading = false;
-  //       },
-  //       error: (err) => {
-  //         console.error(err);
-  //         this.error = "Impossible de charger les recettes. Réessayez plus tard.";
-  //         this.loading = false;
-  //       }
-  //     });
-  // }
-
-  // 👈 Méthode pour afficher les instructions
-  
   
     loadMeals() {
     this.loading = true;
@@ -49,6 +32,23 @@ export class DashboardComponent implements OnInit {
       },
       error: (err) => {
         this.error = "Impossible de charger les recettes.";
+        this.loading = false;
+        console.error(err);
+      }
+    });
+  }
+
+
+  // Recherche par nom
+  searchMeals() {
+    this.loading = true;
+    this.api.searchMealByName(this.searchName).subscribe({
+      next: (data) => {
+        this.meals = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = "Erreur lors de la recherche.";
         this.loading = false;
         console.error(err);
       }
