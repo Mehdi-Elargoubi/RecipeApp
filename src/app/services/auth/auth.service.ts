@@ -4,7 +4,7 @@ import {
   signOut, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail,
   authState
 } from '@angular/fire/auth';
-import { from, Observable, tap } from 'rxjs';
+import { from, map, Observable, tap } from 'rxjs';
 import { User as FirebaseUser, UserCredential } from 'firebase/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { getDoc, setDoc } from 'firebase/firestore';
@@ -41,6 +41,7 @@ export class AuthService {
       return this.auth.onAuthStateChanged(user => sub.next(user));
     });
   }
+
 
   register(userData: UserData): Observable<void> {
     const { firstName, lastName, birthDate, email, password, photoURL } = userData;
@@ -96,6 +97,7 @@ export class AuthService {
             birthDate: extraData?.birthDate || '',
             email: user.email,
             photoURL: user.photoURL || '',
+            createdAt: new Date()
           });
           console.log('User stored in Firestore after first login.');
         } else {
@@ -105,10 +107,43 @@ export class AuthService {
     );
   }
 
-  // Connexion Google (popup)
-  loginWithGoogle() {
+
+  // Connexion / Inscription Google (popup)
+  loginWithGoogle(extraData?: { birthDate?: string, firstName?: string, lastName?: string }): Observable<FirebaseUser> {
     const provider = new GoogleAuthProvider();
-    return from(signInWithPopup(this.auth, provider));
+
+    return from(signInWithPopup(this.auth, provider)).pipe(
+      tap(async (cred) => {
+        const user = cred.user;
+
+        if (!user.emailVerified) {
+          console.warn('Google account not verified. User cannot be stored in Firestore yet.');
+          throw new Error('Veuillez vérifier votre email Google avant de vous connecter.');
+        }
+
+        // Check if user is already stored in Firestore
+        const userRef = doc(this.firestore, 'users', user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          // Store the user for the first time
+          await setDoc(userRef, {
+            uid: user.uid,
+            firstName: extraData?.firstName || user.displayName?.split(' ')[0] || '',
+            lastName: extraData?.lastName || user.displayName?.split(' ')[1] || '',
+            birthDate: extraData?.birthDate || '',
+            email: user.email,
+            photoURL: user.photoURL || '',
+            emailVerified: user.emailVerified,
+            createdAt: new Date()
+          });
+          console.log('User stored in Firestore after first Google login.');
+        } else {
+          console.log('User already exists in Firestore. No action needed.');
+        }
+      }),
+      map(cred => cred.user)
+    )
   }
 
   // Déconnexion
@@ -124,28 +159,6 @@ export class AuthService {
   // Récupérer utilisateur courant (promise)
   currentUser() {
     return this.auth.currentUser;
-  }
-
-  async checkUserExists(uid: string): Promise<boolean> {
-    const userRef = doc(this.firestore, 'users', uid);
-    const userSnap = await getDoc(userRef);
-    return userSnap.exists();
-  }
-
-  async getUserByUid(uid: string): Promise<any | null> {
-    try {
-      const userRef = doc(this.firestore, 'users', uid);
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        return userSnap.data();
-      } else {
-        console.log('No user found with UID:', uid);
-        return null;
-      }
-    } catch (error) {
-      console.error('Error retrieving user from Firestore:', error);
-      return null;
-    }
   }
 
   // Inscription

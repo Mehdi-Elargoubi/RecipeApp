@@ -18,18 +18,30 @@ export class LoginComponent {
   email = '';
   password = '';
 
+  extraUserData?: { firstName?: string, lastName?: string, birthDate?: string };
+
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
+
+    // Read extra data from router state safely
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state && 'extraUserData' in navigation.extras.state) {
+      this.extraUserData = navigation.extras.state['extraUserData'] as {
+        firstName?: string,
+        lastName?: string,
+        birthDate?: string
+      };
+    }
   }
 
   onSubmit() {
     if (this.loginForm.invalid) return;
     this.loading = true;
     const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).subscribe({
+    this.authService.login(email, password, this.extraUserData).subscribe({
       next: () => {
         this.loading = false;
         alert('Connexion réussie !');

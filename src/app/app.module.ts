@@ -15,6 +15,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { HttpClientModule } from '@angular/common/http';  // ⭐ IMPORTANT
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     
     
 
