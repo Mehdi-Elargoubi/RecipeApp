@@ -1,0 +1,28 @@
+<!-- <nav class="navbar">
+  <h2>projet devops</h2>
+  <div class="nav-buttons">
+    <button routerLink="/login" routerLinkActive="active">Connexion</button>
+    <button routerLink="/signup" routerLinkActive="active">Inscription</button>
+    <button routerLink="/dashboard" routerLinkActive="active">Tableau de bord</button>
+    <button *ngIf="user$ | async as user" (click)="logout()">Déconnexion</button>
+  </div>
+</nav> -->
+
+
+<nav class="navbar">
+  <h2>projet devops</h2>
+
+  <div class="nav-buttons">
+    <!-- 🔓 Si l’utilisateur n’est PAS connecté -->
+    <ng-container *ngIf="!(user$ | async)">
+      <button routerLink="/login" routerLinkActive="active">Connexion</button>
+      <button routerLink="/signup" routerLinkActive="active">Inscription</button>
+    </ng-container>
+
+    <!-- 🔐 Si l’utilisateur est connecté -->
+    <ng-container *ngIf="user$ | async as user">
+      <button routerLink="/dashboard" routerLinkActive="active">Tableau de bord</button>
+      <button (click)="logout()">Déconnexion</button>
+    </ng-container>
+  </div>
+</nav>
