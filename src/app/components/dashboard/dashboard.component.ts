@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { ApiService } from '../../services/api/api.service';
 import { Meal } from '../../models/meal.model';
 
 

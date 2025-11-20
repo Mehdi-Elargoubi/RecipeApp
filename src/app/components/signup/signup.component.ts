@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService, UserData } from '../../services/auth.service';
+import { AuthService, UserData } from '../../services/auth/auth.service';
 import { getFirestore, doc, setDoc } from '@angular/fire/firestore';
 
 // Ajoute cet import en haut du fichier
@@ -12,6 +12,8 @@ import { take } from 'rxjs/operators';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
+
+
 export class SignupComponent {
   signupForm: FormGroup;
   loading: boolean = false;
@@ -33,12 +35,12 @@ export class SignupComponent {
       photo: ['']
     });
 
-  //   this.authService.getUser().subscribe(user => {
-  //     if (user) {
-  //       // Si déjà connecté, on redirige vers le dashboard
-  //       this.router.navigate(['/dashboard']);
-  //     }
-  //  });
+    //   this.authService.getUser().subscribe(user => {
+    //     if (user) {
+    //       // Si déjà connecté, on redirige vers le dashboard
+    //       this.router.navigate(['/dashboard']);
+    //     }
+    //  });
 
     // Vérifie une fois si l'utilisateur est déjà connecté (take(1))
     // On évite ainsi une redirection répétée à chaque changement d'authState
@@ -64,6 +66,31 @@ export class SignupComponent {
       };
       reader.readAsDataURL(this.selectedFile);
     }
+  }
+
+  async onSubmit() {
+    if (this.signupForm.invalid) {
+      alert('Veuillez remplir tous les champs correctement.');
+      return;
+    }
+
+    this.loading = true;
+    const { firstName, lastName, birthDate, email, password } = this.signupForm.value;
+
+    const userData: UserData = { firstName, lastName, birthDate, email, password, photoURL: '' };
+
+    this.authService.register(userData).subscribe({
+      next: () => {
+        this.loading = false;
+        alert('Un email de vérification a été envoyé. Veuillez vérifier votre boîte mail avant de vous connecter.');
+        this.router.navigate(['/login'], { state: { extraUserData: { firstName: userData.firstName, lastName: userData.lastName, birthDate: userData.birthDate } } }); // Rediriger vers la page de connexion
+      },
+      error: (error) => {
+        console.error('Erreur inscription :', error);
+        this.loading = false;
+        alert('Erreur inscription : ' + error.message);
+      }
+    });
   }
 
   // async onSubmit() {
@@ -158,33 +185,6 @@ export class SignupComponent {
   //     }
   //   });
   // }
-
-
-
-async onSubmit() {
-  if (this.signupForm.invalid) {
-    alert('Veuillez remplir tous les champs correctement.');
-    return;
-  }
-
-  this.loading = true;
-  const { firstName, lastName, birthDate, email, password } = this.signupForm.value;
-
-  const userData: UserData = { firstName, lastName, birthDate, email, password, photoURL: '' };
-
-  this.authService.register(userData).subscribe({
-    next: () => {
-      this.loading = false;
-      alert('Un email de vérification a été envoyé. Veuillez vérifier votre boîte mail avant de vous connecter.');
-      this.router.navigate(['/login']); // Rediriger vers la page de connexion
-    },
-    error: (error) => {
-      console.error('Erreur inscription :', error);
-      this.loading = false;
-      alert('Erreur inscription : ' + error.message);
-    }
-  });
-}
 
 
 }
