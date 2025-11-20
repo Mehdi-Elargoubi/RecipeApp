@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile,
-         signOut, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail, 
-         authState} from '@angular/fire/auth';
+import {
+  Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile,
+  signOut, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail,
+  authState
+} from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
 import { User } from 'firebase/auth';
 import { Firestore } from '@angular/fire/firestore';
-import { setDoc } from 'firebase/firestore';
+import { getDoc, setDoc } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
 
 import { sendEmailVerification } from '@angular/fire/auth';
@@ -19,9 +21,13 @@ export interface UserData {
   photoURL?: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
+
+
 export class AuthService {
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  constructor(private auth: Auth, private firestore: Firestore) { }
 
   // État de l’utilisateur
   getUser(): Observable<any> {
@@ -69,7 +75,7 @@ export class AuthService {
   // }
 
 
- // 🔹 Inscription avec email de vérification
+  // 🔹 Inscription avec email de vérification
   // register(userData: UserData): Observable<void> {
   //   const { firstName, lastName, birthDate, email, password, photoURL } = userData;
 
@@ -100,33 +106,33 @@ export class AuthService {
   //   );
   // }
 
-register(userData: UserData): Observable<void> {
-  const { firstName, lastName, birthDate, email, password, photoURL } = userData;
+  register(userData: UserData): Observable<void> {
+    const { firstName, lastName, birthDate, email, password, photoURL } = userData;
 
-  return from(
-    createUserWithEmailAndPassword(this.auth, email, password).then(async (userCredential) => {
-      const user = userCredential.user;
+    return from(
+      createUserWithEmailAndPassword(this.auth, email, password).then(async (userCredential) => {
+        const user = userCredential.user;
 
-      // Mettre à jour le profil utilisateur
-      await updateProfile(user, {
-        displayName: firstName && lastName ? `${firstName} ${lastName}` : undefined,
-        photoURL: photoURL || ''
-      });
+        // Mettre à jour le profil utilisateur
+        await updateProfile(user, {
+          displayName: firstName && lastName ? `${firstName} ${lastName}` : undefined,
+          photoURL: photoURL || ''
+        });
 
-      try {
-        // Envoyer l'email de vérification
-        await sendEmailVerification(user);
-        console.log('Email de vérification envoyé.');
-      } catch (error) {
-        console.error('Erreur lors de l’envoi de l’email de vérification :', error);
-        throw new Error('Impossible d’envoyer l’email de vérification. Veuillez réessayer plus tard.');
-      }
+        try {
+          // Envoyer l'email de vérification
+          await sendEmailVerification(user);
+          console.log('Email de vérification envoyé.');
+        } catch (error) {
+          console.error('Erreur lors de l’envoi de l’email de vérification :', error);
+          throw new Error('Impossible d’envoyer l’email de vérification. Veuillez réessayer plus tard.');
+        }
 
-      // Déconnexion immédiate après l'inscription
-      await signOut(this.auth);
-    })
-  );
-}
+        // Déconnexion immédiate après l'inscription
+        await signOut(this.auth);
+      })
+    );
+  }
 
 
   // Connexion Email / Password
@@ -147,11 +153,33 @@ register(userData: UserData): Observable<void> {
 
   // Reset password
   resetPassword(email: string): Observable<void> {
-  return from(sendPasswordResetEmail(this.auth, email));
+    return from(sendPasswordResetEmail(this.auth, email));
   }
 
   // Récupérer utilisateur courant (promise)
   currentUser() {
     return this.auth.currentUser;
+  }
+
+  async checkUserExists(uid: string): Promise<boolean> {
+    const userRef = doc(this.firestore, 'users', uid);
+    const userSnap = await getDoc(userRef);
+    return userSnap.exists();
+  }
+
+  async getUserByUid(uid: string): Promise<any | null> {
+    try {
+      const userRef = doc(this.firestore, 'users', uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        return userSnap.data();
+      } else {
+        console.log('No user found with UID:', uid);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error retrieving user from Firestore:', error);
+      return null;
+    }
   }
 }
