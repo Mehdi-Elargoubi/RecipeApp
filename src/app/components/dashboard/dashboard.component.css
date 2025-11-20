@@ -1,0 +1,60 @@
+.dashboard-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  gap: 40px;
+}
+
+.welcome-box {
+  flex: 1;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.welcome-box h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 17px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.connected-msg {
+  background: #e7f7ff;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border-left: 4px solid #00aaff;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.action-buttons button {
+  padding: 12px 20px;
+  border: none;
+  background: #ff7b00;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.action-buttons button:hover {
+  background: #e56e00;
+}
+
+.hero-image img {
+  width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}

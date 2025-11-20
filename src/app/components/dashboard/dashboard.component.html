@@ -1,1 +1,28 @@
 <p>dashboard works!</p>
+<div class="dashboard-container">
+
+  <div class="welcome-box">
+    <h1>Bienvenue sur World Recipes 🌍</h1>
+
+    <p class="subtitle">
+      Découvrez des recettes du monde entier, explorez les saveurs,  
+      et laissez l’IA vous proposer des idées à partir de vos ingrédients !
+    </p>
+
+    <p *ngIf="userEmail" class="connected-msg">
+      Connecté en tant que : <strong>{{ userEmail }}</strong>
+    </p>
+
+    <div class="action-buttons">
+      <button routerLink="/recipes">Voir les recettes</button>
+      <button routerLink="/favorites">Mes favoris</button>
+      <button routerLink="/ai-chef">Chef IA</button>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <img src="https://img.freepik.com/free-vector/flat-design-food-frame_23-2149336130.jpg"
+         alt="Cuisine du monde">
+  </div>
+
+</div>

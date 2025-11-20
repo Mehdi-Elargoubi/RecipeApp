@@ -83,7 +83,7 @@ export class SignupComponent {
       next: () => {
         this.loading = false;
         alert('Un email de vérification a été envoyé. Veuillez vérifier votre boîte mail avant de vous connecter.');
-        this.router.navigate(['/login']); // Rediriger vers la page de connexion
+        this.router.navigate(['/login'], { state: { extraUserData: { firstName: userData.firstName, lastName: userData.lastName, birthDate: userData.birthDate } } }); // Rediriger vers la page de connexion
       },
       error: (error) => {
         console.error('Erreur inscription :', error);
