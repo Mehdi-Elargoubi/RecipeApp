@@ -9,6 +9,7 @@ import { setDoc } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
 
 import { sendEmailVerification } from '@angular/fire/auth';
+import { browserLocalPersistence, setPersistence } from '@angular/fire/auth';
 
 export interface UserData {
   firstName?: string;
@@ -21,7 +22,8 @@ export interface UserData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  constructor(private auth: Auth) {}
+
 
   // État de l’utilisateur
   getUser(): Observable<any> {
