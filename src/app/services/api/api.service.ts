@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, forkJoin, map } from 'rxjs';
 import { Meal, Ingredient } from '../../models/meal.model';
+import { Category } from '../../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,38 @@ export class ApiService {
     );
   }
 
+    // 🆕 ⭐ Obtenir TOUTES les meals (A → Z)
+  getAllMeals(): Observable<Meal[]> {
+    const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+    const requests = letters.map(letter =>
+      this.http.get<any>(`${this.baseUrl}/search.php?f=${letter}`)
+    );
+
+    return forkJoin(requests).pipe(
+      map((responses: any[]) => {
+        const allMeals: Meal[] = [];
+
+        responses.forEach(res => {
+          if (res.meals) {
+            res.meals.forEach((raw: any) => {
+              allMeals.push(this.mapMeal(raw));
+            });
+          }
+        });
+
+        return allMeals;
+      })
+    );
+  }
+
+    // 🔥 Nouveau : Lister toutes les catégories
+  getAllCategories(): Observable<Category[]> {
+    return this.http.get<any>(`${this.baseUrl}/categories.php`).pipe(
+      map(res => res.categories || [])
+    );
+  }
+  
   // Mapper la réponse API en format Meal avec ingrédients + mesures
   private mapMeal(raw: any): Meal {
     const ingredients: Ingredient[] = [];
@@ -63,4 +96,7 @@ export class ApiService {
       ingredients
     };
   }
+
+
+  
 }

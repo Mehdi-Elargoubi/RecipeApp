@@ -21,6 +21,9 @@
 
     <!-- 🔐 Si l’utilisateur est connecté -->
     <ng-container *ngIf="user$ | async as user">
+      <button routerLink="/all-meals">Toutes les recettes</button>
+      <button routerLink="/categories">Voir les catégories</button>
+
       <button routerLink="/dashboard" routerLinkActive="active">Tableau de bord</button>
       <button (click)="logout()">Déconnexion</button>
     </ng-container>

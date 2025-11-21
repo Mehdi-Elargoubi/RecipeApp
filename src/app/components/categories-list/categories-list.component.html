@@ -1,0 +1,29 @@
+<p>categories-list works!</p>
+<div class="container">
+
+  <h2 class="title">🍽️ Meal Categories</h2>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">Chargement...</div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <!-- Categories Grid -->
+  <div class="categories-grid" *ngIf="!loading && !error">
+
+    <div class="category-card" *ngFor="let cat of categories">
+
+      <img [src]="cat.strCategoryThumb" [alt]="cat.strCategory" />
+
+      <h3>{{ cat.strCategory }}</h3>
+
+      <p class="description">
+        {{ cat.strCategoryDescription | slice:0:120 }}...
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

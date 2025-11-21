@@ -1,0 +1,42 @@
+<p>all-meals works!</p>
+<div class="all-meals-container">
+
+  <h2>📚 Toutes les Recettes</h2>
+
+  <div *ngIf="loading" class="loading">
+    Chargement des recettes...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div class="meals-grid">
+    <div class="meal-card" *ngFor="let meal of meals">
+
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+
+      <h3>{{ meal.strMeal }}</h3>
+
+      <p><strong>Catégorie :</strong> {{ meal.strCategory }}</p>
+      <p><strong>Origine :</strong> {{ meal.strArea }}</p>
+
+      <h4>Ingrédients :</h4>
+      <ul>
+        <li *ngFor="let ing of meal.ingredients">
+          {{ ing.measure }} {{ ing.name }}
+        </li>
+      </ul>
+
+      <button (click)="showInstructions(meal.strInstructions)">
+        Voir instructions
+      </button>
+
+      <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank">
+        🎬 Voir la vidéo
+      </a>
+
+    </div>
+  </div>
+
+</div>

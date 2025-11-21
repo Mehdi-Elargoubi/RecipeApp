@@ -15,7 +15,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { HttpClientModule } from '@angular/common/http';  // ⭐ IMPORTANT
+import { HttpClientModule } from '@angular/common/http';
+import { AllMealsComponent } from './components/all-meals/all-meals.component';
+import { CategoriesListComponent } from './components/categories-list/categories-list.component';  // ⭐ IMPORTANT
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { HttpClientModule } from '@angular/common/http';  // ⭐ IMPORTANT
     DashboardComponent,
     NavbarComponent,
     ForgotPasswordComponent,
+    AllMealsComponent,
+    CategoriesListComponent,
 
   ],
   imports: [
