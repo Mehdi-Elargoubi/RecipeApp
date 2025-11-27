@@ -1,0 +1,27 @@
+<p>areas-list works!</p>
+<div class="areas-container">
+
+  <h2 class="title">🌍 Liste des Meals par Région</h2>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    Chargement des régions culinaires...
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <!-- Area List -->
+  <div class="area-grid" *ngIf="!loading && !error">
+    <a
+      class="area-card"
+      *ngFor="let area of areas"
+      [routerLink]="['/areas', area.strArea]"
+    >
+      <span class="area-text">{{ area.strArea }}</span>
+    </a>
+  </div>
+  
+</div>

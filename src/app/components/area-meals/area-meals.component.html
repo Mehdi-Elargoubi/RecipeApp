@@ -1,0 +1,18 @@
+<p>area-meals works!</p>
+<div class="area-meals-container">
+
+  <h2>Plats de la région : {{ area }}</h2>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+
+  <div class="meals-grid">
+    <div class="meal-card" *ngFor="let meal of meals">
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+      <h3>{{ meal.strMeal }}</h3>
+
+      <a [routerLink]="['/meal', meal.idMeal]" class="btn-details">
+        Voir détails
+      </a>
+    </div>
+  </div>
+</div>
