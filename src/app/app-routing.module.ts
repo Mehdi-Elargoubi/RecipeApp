@@ -7,6 +7,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './core/auth.guard';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { AllMealsComponent } from './components/all-meals/all-meals.component';
+import { AreasListComponent } from './components/areas-list/areas-list.component';
+import { AreaMealsComponent } from './components/area-meals/area-meals.component';
+import { CategoryMealsComponent } from './components/category-meals/category-meals.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,6 +20,9 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'all-meals', component: AllMealsComponent },
   { path: 'categories', component: CategoriesListComponent },
+  { path: 'areas', component: AreasListComponent },  
+  { path: 'areas/:area', component: AreaMealsComponent },
+  { path: 'categories/:category', component: CategoryMealsComponent },
 
 ];
 

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin, map } from 'rxjs';
 import { Meal, Ingredient } from '../../models/meal.model';
 import { Category } from '../../models/category.model';
+import { Area } from '../../models/area.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,12 +67,54 @@ export class ApiService {
     );
   }
 
-    // 🔥 Nouveau : Lister toutes les catégories
+  // 🔥 Nouveau : Lister toutes les catégories
   getAllCategories(): Observable<Category[]> {
     return this.http.get<any>(`${this.baseUrl}/categories.php`).pipe(
       map(res => res.categories || [])
     );
   }
+
+  // Lister toutes les zones (Area : Italian, Moroccan, American…)
+  getAllAreas(): Observable<Area[]> {
+    return this.http.get<any>(`${this.baseUrl}/list.php?a=list`).pipe(
+      map(res => res.meals || [])
+    );
+  }
+
+  // Récupérer tous les meals d'une area
+  getMealsByArea(area: string): Observable<Meal[]> {
+    return this.http.get<any>(`${this.baseUrl}/filter.php?a=${area}`).pipe(
+      map(res =>
+        res.meals?.map((m: any) => ({
+          idMeal: m.idMeal,
+          strMeal: m.strMeal,
+          strMealThumb: m.strMealThumb,
+          // les détails ne sont pas inclus dans filter.php
+          strCategory: '',
+          strArea: area,
+          strInstructions: '',
+          strTags: '',
+          strYoutube: '',
+          ingredients: []
+        })) || []
+      )
+    );
+  }
+
+
+  ////////////////////////////////////////7
+  filterByCategory(category: string): Observable<Meal[]> {
+    return this.http.get<any>(`${this.baseUrl}/filter.php?c=${category}`).pipe(
+      map(res => res.meals?.map((m: any) => ({ 
+        idMeal: m.idMeal, 
+        strMeal: m.strMeal, 
+        strMealThumb: m.strMealThumb,
+        strCategory: category
+      })) || [])
+    );
+  }
+
+
   
   // Mapper la réponse API en format Meal avec ingrédients + mesures
   private mapMeal(raw: any): Meal {

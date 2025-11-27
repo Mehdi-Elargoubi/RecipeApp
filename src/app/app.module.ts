@@ -17,7 +17,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AllMealsComponent } from './components/all-meals/all-meals.component';
-import { CategoriesListComponent } from './components/categories-list/categories-list.component';  // ⭐ IMPORTANT
+import { CategoriesListComponent } from './components/categories-list/categories-list.component';
+import { AreasListComponent } from './components/areas-list/areas-list.component';
+import { AreaMealsComponent } from './components/area-meals/area-meals.component';
+import { CategoryMealsComponent } from './components/category-meals/category-meals.component';  // ⭐ IMPORTANT
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import { CategoriesListComponent } from './components/categories-list/categories
     ForgotPasswordComponent,
     AllMealsComponent,
     CategoriesListComponent,
+    AreasListComponent,
+    AreaMealsComponent,
+    CategoryMealsComponent,
 
   ],
   imports: [
