@@ -1,0 +1,15 @@
+<p>ingredient-meals works!</p>
+<div class="container">
+  <h2 class="title">🍲 Plats contenant : {{ ingredient }}</h2>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div class="meals-grid" *ngIf="!loading && !error">
+    <div class="meal-card" *ngFor="let meal of meals">
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+      <h3>{{ meal.strMeal }}</h3>
+      <a class="btn-details" [routerLink]="['/meal', meal.idMeal]">Voir détails</a>
+    </div>
+  </div>
+</div>

@@ -114,6 +114,19 @@ export class ApiService {
     );
   }
 
+  // Liste des ingrédients
+  getAllIngredients(): Observable<any[]> {
+    return this.http.get<any>(`${this.baseUrl}/list.php?i=list`).pipe(
+      map(res => res.meals || [])
+    );
+  }
+
+  // Meals par ingrédient
+  getMealsByIngredient(ingredient: string): Observable<any[]> {
+    return this.http.get<any>(`${this.baseUrl}/filter.php?i=${ingredient}`).pipe(
+      map(res => res.meals || [])
+    );
+  }
 
   
   // Mapper la réponse API en format Meal avec ingrédients + mesures

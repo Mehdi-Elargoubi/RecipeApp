@@ -10,6 +10,8 @@ import { AllMealsComponent } from './components/all-meals/all-meals.component';
 import { AreasListComponent } from './components/areas-list/areas-list.component';
 import { AreaMealsComponent } from './components/area-meals/area-meals.component';
 import { CategoryMealsComponent } from './components/category-meals/category-meals.component';
+import { IngredientsListComponent } from './components/ingredients-list/ingredients-list.component';
+import { IngredientMealsComponent } from './components/ingredient-meals/ingredient-meals.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -22,7 +24,10 @@ const routes: Routes = [
   { path: 'categories', component: CategoriesListComponent },
   { path: 'areas', component: AreasListComponent },  
   { path: 'areas/:area', component: AreaMealsComponent },
+  //{ path: 'meal/:id', component: MealDetailComponent },
   { path: 'categories/:category', component: CategoryMealsComponent },
+  { path: 'ingredients', component: IngredientsListComponent },
+  { path: 'ingredients/:ingredient', component: IngredientMealsComponent },
 
 ];
 

@@ -20,7 +20,9 @@ import { AllMealsComponent } from './components/all-meals/all-meals.component';
 import { CategoriesListComponent } from './components/categories-list/categories-list.component';
 import { AreasListComponent } from './components/areas-list/areas-list.component';
 import { AreaMealsComponent } from './components/area-meals/area-meals.component';
-import { CategoryMealsComponent } from './components/category-meals/category-meals.component';  // ⭐ IMPORTANT
+import { CategoryMealsComponent } from './components/category-meals/category-meals.component';
+import { IngredientsListComponent } from './components/ingredients-list/ingredients-list.component';
+import { IngredientMealsComponent } from './components/ingredient-meals/ingredient-meals.component';  // ⭐ IMPORTANT
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { CategoryMealsComponent } from './components/category-meals/category-mea
     AreasListComponent,
     AreaMealsComponent,
     CategoryMealsComponent,
+    IngredientsListComponent,
+    IngredientMealsComponent,
 
   ],
   imports: [
