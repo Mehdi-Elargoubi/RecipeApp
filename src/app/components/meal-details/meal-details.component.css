@@ -1,0 +1,108 @@
+.meal-details-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Conteneur flex pour image + infos */
+.meal-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+/* Image */
+.meal-image {
+  flex: 1 1 300px;
+  max-width: 400px;
+}
+
+.meal-image img {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.meal-image img:hover {
+  transform: scale(1.03);
+}
+
+/* Infos */
+.meal-info {
+  flex: 2 1 400px;
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.meal-info h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #555;
+}
+
+.meal-info p, .meal-info li {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.6;
+}
+
+.meal-info ul {
+  list-style: disc inside;
+  padding-left: 0;
+  margin-bottom: 15px;
+}
+
+.instructions {
+  white-space: pre-line; /* Garde les sauts de ligne de l’API */
+}
+
+/* Bouton YouTube */
+.btn-youtube {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #FF0000;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-youtube:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+}
+
+/* Loading / Error */
+.loading, .error {
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .meal-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .meal-info {
+    width: 100%;
+  }
+}

@@ -22,7 +22,8 @@ import { AreasListComponent } from './components/areas-list/areas-list.component
 import { AreaMealsComponent } from './components/area-meals/area-meals.component';
 import { CategoryMealsComponent } from './components/category-meals/category-meals.component';
 import { IngredientsListComponent } from './components/ingredients-list/ingredients-list.component';
-import { IngredientMealsComponent } from './components/ingredient-meals/ingredient-meals.component';  // ⭐ IMPORTANT
+import { IngredientMealsComponent } from './components/ingredient-meals/ingredient-meals.component';
+import { MealDetailsComponent } from './components/meal-details/meal-details.component';  // ⭐ IMPORTANT
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { IngredientMealsComponent } from './components/ingredient-meals/ingredie
     CategoryMealsComponent,
     IngredientsListComponent,
     IngredientMealsComponent,
+    MealDetailsComponent,
 
   ],
   imports: [

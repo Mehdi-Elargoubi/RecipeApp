@@ -12,10 +12,10 @@
   <!-- Categories Grid -->
 <div class="categories-grid" *ngIf="!loading && !error">
   <div class="category-card" *ngFor="let cat of categories">
-    <a [routerLink]="['/categories', cat.strCategory]" class="category-link">
+    <span [routerLink]="['/categories', cat.strCategory]" class="category-link" hover>
       <img [src]="cat.strCategoryThumb" [alt]="cat.strCategory" />
       <h3>{{ cat.strCategory }}</h3>
-    </a>
+    </span>
     <p class="description">{{ cat.strCategoryDescription | slice:0:120 }}...</p>
   </div>
 </div>

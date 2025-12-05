@@ -15,13 +15,13 @@
 
   <!-- Area List -->
   <div class="area-grid" *ngIf="!loading && !error">
-    <a
+    <div
       class="area-card"
       *ngFor="let area of areas"
       [routerLink]="['/areas', area.strArea]"
     >
       <span class="area-text">{{ area.strArea }}</span>
-    </a>
+    </div>
   </div>
   
 </div>

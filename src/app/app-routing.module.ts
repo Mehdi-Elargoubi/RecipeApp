@@ -12,6 +12,7 @@ import { AreaMealsComponent } from './components/area-meals/area-meals.component
 import { CategoryMealsComponent } from './components/category-meals/category-meals.component';
 import { IngredientsListComponent } from './components/ingredients-list/ingredients-list.component';
 import { IngredientMealsComponent } from './components/ingredient-meals/ingredient-meals.component';
+import { MealDetailsComponent } from './components/meal-details/meal-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'categories/:category', component: CategoryMealsComponent },
   { path: 'ingredients', component: IngredientsListComponent },
   { path: 'ingredients/:ingredient', component: IngredientMealsComponent },
+  { path: 'meal/:id', component: MealDetailsComponent },
 
 ];
 

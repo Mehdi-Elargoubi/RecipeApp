@@ -1,0 +1,34 @@
+<div class="meal-details-container" *ngIf="!loading && !error">
+
+  <h2 class="title">{{ meal.strMeal }}</h2>
+
+  <div class="meal-content">
+
+    <div class="meal-image">
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+    </div>
+
+    <div class="meal-info">
+      <p><strong>Catégorie :</strong> {{ meal.strCategory }}</p>
+      <p><strong>Origine :</strong> {{ meal.strArea }}</p>
+
+      <h3>Ingrédients :</h3>
+      <ul>
+        <li *ngFor="let ing of meal.ingredients">{{ ing.measure }} {{ ing.name }}</li>
+      </ul>
+
+      <h3>Instructions :</h3>
+      <ol>
+        <li *ngFor="let step of instructionsList">{{ step }}</li>
+      </ol>
+
+      <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank" class="btn-youtube">
+        ▶ Voir vidéo
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading">Chargement...</div>
+<div *ngIf="error" class="error">{{ error }}</div>

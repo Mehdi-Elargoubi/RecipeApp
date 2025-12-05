@@ -54,3 +54,9 @@
   font-size: 14px;
   color: #555;
 }
+
+.area-card:hover {
+  transform: translateY(-6px);
+  background: #f8f8f8;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.20);
+}
