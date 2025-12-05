@@ -1,0 +1,21 @@
+<p>ingredients-list works!</p>
+<div class="ingredients-container">
+
+  <h2 class="title">🥕 Main Ingredients</h2>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="ingredients-grid">
+
+    <div class="ingredient-card"
+         *ngFor="let i of ingredients"
+         [routerLink]="['/ingredients', i.strIngredient]">
+
+      <h3>{{ i.strIngredient }}</h3>
+
+    </div>
+
+  </div>
+
+</div>
