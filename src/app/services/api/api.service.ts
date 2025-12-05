@@ -4,6 +4,7 @@ import { Observable, forkJoin, map } from 'rxjs';
 import { Meal, Ingredient } from '../../models/meal.model';
 import { Category } from '../../models/category.model';
 import { Area } from '../../models/area.model';
+import { IngredientItem } from '../../models/ingredient.model';
 
 @Injectable({
   providedIn: 'root'
@@ -115,11 +116,11 @@ export class ApiService {
   }
 
   // Liste des ingrédients
-  getAllIngredients(): Observable<any[]> {
-    return this.http.get<any>(`${this.baseUrl}/list.php?i=list`).pipe(
-      map(res => res.meals || [])
-    );
-  }
+  // getAllIngredients(): Observable<any[]> {
+  //   return this.http.get<any>(`${this.baseUrl}/list.php?i=list`).pipe(
+  //     map(res => res.meals || [])
+  //   );
+  // }
 
   // Meals par ingrédient
   getMealsByIngredient(ingredient: string): Observable<any[]> {
@@ -127,6 +128,13 @@ export class ApiService {
       map(res => res.meals || [])
     );
   }
+
+  getAllIngredients(): Observable<IngredientItem[]> {
+  return this.http.get<any>(`${this.baseUrl}/list.php?i=list`).pipe(
+    map(res => res.meals || [])
+  );
+}
+
 
   
   // Mapper la réponse API en format Meal avec ingrédients + mesures
