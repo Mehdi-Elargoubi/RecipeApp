@@ -12,7 +12,7 @@
   </div>
 
   <div class="meals-grid">
-    <div class="meal-card" *ngFor="let meal of meals">
+    <div class="meal-card" *ngFor="let meal of meals" [routerLink]="['/meal', meal.idMeal]">
 
       <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
 
@@ -28,11 +28,11 @@
         </li>
       </ul>
 
-      <button (click)="showInstructions(meal.strInstructions)">
+      <button (click)="showInstructions(meal.strInstructions); $event.stopPropagation()">
         Voir instructions
       </button>
 
-      <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank">
+      <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank" (click)="$event.stopPropagation()">
         🎬 Voir la vidéo
       </a>
 

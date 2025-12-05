@@ -4,24 +4,33 @@
 
   <div class="meal-content">
 
+    <!-- Image du meal -->
     <div class="meal-image">
       <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
     </div>
 
+    <!-- Informations du meal -->
     <div class="meal-info">
       <p><strong>Catégorie :</strong> {{ meal.strCategory }}</p>
       <p><strong>Origine :</strong> {{ meal.strArea }}</p>
 
+      <!-- Ingrédients -->
       <h3>Ingrédients :</h3>
-      <ul>
-        <li *ngFor="let ing of meal.ingredients">{{ ing.measure }} {{ ing.name }}</li>
+      <ul class="ingredients-list">
+        <li *ngFor="let ing of meal.ingredients">
+          {{ ing.measure }} {{ ing.name }}
+        </li>
       </ul>
 
+      <!-- Instructions numérotées -->
       <h3>Instructions :</h3>
-      <ol>
-        <li *ngFor="let step of instructionsList">{{ step }}</li>
+      <ol class="instructions-list">
+        <li *ngFor="let step of instructionsList" class="instruction-step">
+          {{ step }}
+        </li>
       </ol>
 
+      <!-- Lien YouTube -->
       <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank" class="btn-youtube">
         ▶ Voir vidéo
       </a>

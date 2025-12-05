@@ -45,3 +45,13 @@
   cursor: pointer;
   margin-top: 10px;
 }
+
+.meal-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.meal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}

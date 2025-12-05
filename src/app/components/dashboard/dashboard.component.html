@@ -13,7 +13,7 @@
 
   <!-- Liste des recettes -->
   <div class="meals-container">
-    <div class="meal-card" *ngFor="let meal of meals">
+    <div class="meal-card" *ngFor="let meal of meals" [routerLink]="['/meal', meal.idMeal]">
       <img [src]="meal.strMealThumb" [alt]="meal.strMeal" />
       <h3>{{ meal.strMeal }}</h3>
       <p><strong>Catégorie :</strong> {{ meal.strCategory }}</p>
@@ -24,7 +24,6 @@
         <li *ngFor="let ing of meal.ingredients">{{ ing.measure }} {{ ing.name }}</li>
       </ul>
 
-      <button (click)="showInstructions(meal.strInstructions)">Voir les étapes</button>
       <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank">Voir la vidéo</a>
     </div>
   </div>

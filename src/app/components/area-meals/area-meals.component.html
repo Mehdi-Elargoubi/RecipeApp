@@ -6,7 +6,7 @@
   <div *ngIf="loading" class="loading">Chargement...</div>
 
   <div class="meals-grid">
-    <div class="meal-card" *ngFor="let meal of meals">
+    <div class="meal-card" *ngFor="let meal of meals" [routerLink]="['/meal', meal.idMeal]">
       <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
       <h3>{{ meal.strMeal }}</h3>
 
