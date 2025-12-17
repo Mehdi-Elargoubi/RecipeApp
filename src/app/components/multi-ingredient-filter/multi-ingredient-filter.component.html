@@ -1,0 +1,50 @@
+<div class="filter-container">
+
+  <h2 class="title">🧩 Filter by Multiple Ingredients</h2>
+
+  <!-- INPUT -->
+  <input
+    type="text"
+    class="ingredient-input"
+    placeholder="Add ingredient..."
+    [(ngModel)]="ingredientSearch"
+    (input)="filterSuggestions()"
+  />
+
+  <!-- AUTOCOMPLETE -->
+  <div class="suggestions" *ngIf="suggestions.length > 0">
+    <div
+      class="suggestion"
+      *ngFor="let ing of suggestions"
+      (click)="addIngredient(ing)">
+      {{ ing }}
+    </div>
+  </div>
+
+  <!-- SELECTED INGREDIENTS -->
+  <div class="chips">
+    <span class="chip" *ngFor="let ing of selectedIngredients">
+      {{ ing }}
+      <button (click)="removeIngredient(ing)">✖</button>
+    </span>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results">
+
+    <p *ngIf="loading" class="loading">Loading meals...</p>
+
+    <p *ngIf="!loading && filteredMeals.length === 0 && selectedIngredients.length > 0">
+      No meals match these ingredients.
+    </p>
+
+    <div class="meals-grid">
+      <a class="meal-card" *ngFor="let meal of filteredMeals" [routerLink]="['/meal', meal.idMeal]">
+        <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+        <h4>{{ meal.strMeal }}</h4>
+      </a>
+    </div>
+
+  </div>
+
+</div>

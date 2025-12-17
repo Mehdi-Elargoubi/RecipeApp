@@ -1,21 +1,18 @@
-import { environment } from './../environments/environment';
-import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';           // ← Ajouté : pour slice, ngIf, ngFor...
+import { RouterModule } from '@angular/router';           // ← Ajouté : pour routerLink et router-outletimport { FormsModule } from '@angular/forms';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { getAuth, provideAuth } from '@angular/fire/auth';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { getFunctions, provideFunctions } from '@angular/fire/functions';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { HttpClientModule } from '@angular/common/http';
 import { AllMealsComponent } from './components/all-meals/all-meals.component';
 import { CategoriesListComponent } from './components/categories-list/categories-list.component';
 import { AreasListComponent } from './components/areas-list/areas-list.component';
@@ -23,15 +20,24 @@ import { AreaMealsComponent } from './components/area-meals/area-meals.component
 import { CategoryMealsComponent } from './components/category-meals/category-meals.component';
 import { IngredientsListComponent } from './components/ingredients-list/ingredients-list.component';
 import { IngredientMealsComponent } from './components/ingredient-meals/ingredient-meals.component';
-import { MealDetailsComponent } from './components/meal-details/meal-details.component';  // ⭐ IMPORTANT
+import { MealDetailsComponent } from './components/meal-details/meal-details.component';
+import { MultiIngredientFilterComponent } from './components/multi-ingredient-filter/multi-ingredient-filter.component';
+
+// Firebase
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideFunctions, getFunctions } from '@angular/fire/functions';
+import { environment } from './../environments/environment';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     LoginComponent,
     SignupComponent,
     DashboardComponent,
-    NavbarComponent,
     ForgotPasswordComponent,
     AllMealsComponent,
     CategoriesListComponent,
@@ -41,27 +47,26 @@ import { MealDetailsComponent } from './components/meal-details/meal-details.com
     IngredientsListComponent,
     IngredientMealsComponent,
     MealDetailsComponent,
-
+    MultiIngredientFilterComponent,
   ],
   imports: [
     BrowserModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    
-
+    AppRoutingModule,          // ← Contient probablement RouterModule.forRoot(...)
+    CommonModule,              // ← Indispensable pour pipe slice, ngFor, ngIf...
+    FormsModule,               // ← Pour [(ngModel)]
+    ReactiveFormsModule,       // ← Pour [formGroup]
+    FormsModule,               // ← Pour les formulaires template-driven
+    // Pas de RouterModule ici si déjà dans AppRoutingModule
+  ],
+  providers: [
+    // ← Les providers Firebase DOIVENT être ici, PAS dans imports !
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions())
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,6 +13,7 @@ import { CategoryMealsComponent } from './components/category-meals/category-mea
 import { IngredientsListComponent } from './components/ingredients-list/ingredients-list.component';
 import { IngredientMealsComponent } from './components/ingredient-meals/ingredient-meals.component';
 import { MealDetailsComponent } from './components/meal-details/meal-details.component';
+import { MultiIngredientFilterComponent } from './components/multi-ingredient-filter/multi-ingredient-filter.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -30,9 +31,10 @@ const routes: Routes = [
   { path: 'ingredients', component: IngredientsListComponent },
   { path: 'ingredients/:ingredient', component: IngredientMealsComponent },
   { path: 'meal/:id', component: MealDetailsComponent },
+  { path: 'multi-ingredient-filter', component: MultiIngredientFilterComponent }
 
 ];
-
+ 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

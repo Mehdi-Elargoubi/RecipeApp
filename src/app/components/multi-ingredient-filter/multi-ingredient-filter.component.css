@@ -1,0 +1,99 @@
+.filter-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.ingredient-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  font-size: 16px;
+}
+
+.suggestions {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-top: 5px;
+}
+
+.suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background: #f0f0f0;
+}
+
+.chips {
+  margin: 15px 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  background: #ececec;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin: 5px;
+  font-size: 14px;
+}
+
+.chip button {
+  border: none;
+  background: none;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.meals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.meal-card {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.meal-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+
+.meal-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.meal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.meal-card img {
+  width: 100%;
+  border-radius: 10px;
+}
