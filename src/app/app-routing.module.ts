@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'ingredients', component: IngredientsListComponent },
   { path: 'ingredients/:ingredient', component: IngredientMealsComponent },
   { path: 'meal/:id', component: MealDetailsComponent },
-  { path: 'multi-ingredient-filter', component: MultiIngredientFilterComponent }
+  { path: 'multi-ingredient-filter', component: MultiIngredientFilterComponent },
 
 ];
  

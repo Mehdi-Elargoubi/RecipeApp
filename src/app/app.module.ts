@@ -29,7 +29,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { environment } from './../environments/environment';
-
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,7 @@ import { environment } from './../environments/environment';
     IngredientMealsComponent,
     MealDetailsComponent,
     MultiIngredientFilterComponent,
-  ],
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -65,7 +65,8 @@ import { environment } from './../environments/environment';
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideFunctions(() => getFunctions())
+    provideFunctions(() => getFunctions()),
+    provideStorage(() => getStorage())
   ],
   bootstrap: [AppComponent]
 })
