@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 import {
   Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile,
   signOut, signInWithPopup, GoogleAuthProvider, sendPasswordResetEmail,
@@ -13,13 +14,15 @@ import { doc } from 'firebase/firestore';
 import { sendEmailVerification } from '@angular/fire/auth';
 import { browserLocalPersistence, setPersistence } from '@angular/fire/auth';
 
+
 export interface UserData {
   firstName?: string;
   lastName?: string;
   birthDate?: string;
   email: string;
   password: string;
-  photoURL?: string;
+  //photoURL?: string | File;
+  photoBase64?: string;
 }
 
 @Injectable({
@@ -28,7 +31,7 @@ export interface UserData {
 
 
 export class AuthService {
-  constructor(private auth: Auth, private firestore: Firestore) { }
+  constructor(private auth: Auth, private firestore: Firestore, private storage: Storage) { }
 
   // État de l’utilisateur
   getUser(): Observable<any> {
@@ -43,34 +46,84 @@ export class AuthService {
   }
 
 
+  // registerAsupp(userData: UserData): Observable<void> {
+  //   const { firstName, lastName, birthDate, email, password, photoBase64 } = userData;
+
+  //   return from(
+  //     createUserWithEmailAndPassword(this.auth, email, password)
+  //       .then(async (cred) => {
+  //         const user = cred.user;
+  //         let finalPhotoURL = '';
+
+  //         // 🔥 UPLOAD IMAGE
+  //         if (photoURL instanceof File) {
+  //           const storageRef = ref(this.storage, `users/${user.uid}/profile.jpg`);
+  //           const snap = await uploadBytes(storageRef, photoURL);
+  //           finalPhotoURL = await getDownloadURL(snap.ref);
+  //         }
+
+  //         // 🔹 Update Firebase Auth profile
+  //         await updateProfile(user, {
+  //           displayName: `${firstName} ${lastName}`,
+  //           photoURL: finalPhotoURL
+  //         });
+
+  //         // 🔹 Save Firestore user
+  //         await setDoc(doc(this.firestore, 'users', user.uid), {
+  //           uid: user.uid,
+  //           firstName,
+  //           lastName,
+  //           birthDate,
+  //           email,
+  //           photoURL: finalPhotoURL,   // ✅ URL
+  //           createdAt: new Date()
+  //         });
+
+  //         await sendEmailVerification(user);
+  //       })
+  //   );
+  // }
+
+
+  
+  // 📝 Inscription (Firestore uniquement)
   register(userData: UserData): Observable<void> {
-    const { firstName, lastName, birthDate, email, password, photoURL } = userData;
+
+    const { firstName, lastName, birthDate, email, password, photoBase64 } = userData;
 
     return from(
-      createUserWithEmailAndPassword(this.auth, email, password).then(async (userCredential) => {
-        const user = userCredential.user;
-        console.log('Registered user:', user);
+      createUserWithEmailAndPassword(this.auth, email, password)
+        .then(async cred => {
 
-        // Mettre à jour le profil utilisateur
-        await updateProfile(user, {
-          displayName: firstName && lastName ? `${firstName} ${lastName}` : undefined,
-          photoURL: photoURL || ''
-        });
+          const user = cred.user;
 
-        try {
-          // Envoyer l'email de vérification
+          // Update profil Auth (sans photoURL)
+          await updateProfile(user, {
+            displayName: `${firstName} ${lastName}`
+          });
+
+          // Sauvegarde Firestore
+          await setDoc(doc(this.firestore, 'users', user.uid), {
+            uid: user.uid,
+            firstName,
+            lastName,
+            birthDate,
+            email,
+            photoBase64: photoBase64 || '',
+            createdAt: new Date()
+          });
+
+          // Email de vérification
           await sendEmailVerification(user);
-          console.log('Email de vérification envoyé.');
-        } catch (error) {
-          console.error('Erreur lors de l’envoi de l’email de vérification :', error);
-          throw new Error('Impossible d’envoyer l’email de vérification. Veuillez réessayer plus tard.');
-        }
-
-        // Déconnexion immédiate après l'inscription
-        await signOut(this.auth);
-      })
+        })
     );
   }
+
+
+
+
+
+
 
 
   // Connexion Email / Password
@@ -96,10 +149,11 @@ export class AuthService {
             lastName: user.displayName?.split(' ')[1] || '',
             birthDate: extraData?.birthDate || '',
             email: user.email,
-            photoURL: user.photoURL || '',
+            photoURL: user.photoURL || null,
             createdAt: new Date()
           });
           console.log('User stored in Firestore after first login.');
+          console.log('Photo URL:', user.photoURL);
         } else {
           console.log('User already exists in Firestore. No action needed.');
         }
