@@ -45,4 +45,7 @@
       {{ loading ? 'Inscription...' : 'S’inscrire' }}
     </button>
   </form>
+
+  <button class="google-btn" (click)="signupWithGoogle()">S’inscrire avec Google</button>
+  <p>Vous avez déjà un compte ? <a routerLink="/login">Connectez-vous ici</a></p>
 </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -8,53 +8,51 @@ import { AuthService } from '../../services/auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
-
 export class LoginComponent {
   loginForm: FormGroup;
   loading = false;
   errorMessage = '';
-
-  email = '';
-  password = '';
-
-  extraUserData?: { firstName?: string, lastName?: string, birthDate?: string };
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
-
-    // Read extra data from router state safely
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state && 'extraUserData' in navigation.extras.state) {
-      this.extraUserData = navigation.extras.state['extraUserData'] as {
-        firstName?: string,
-        lastName?: string,
-        birthDate?: string
-      };
-    }
   }
 
   onSubmit() {
     if (this.loginForm.invalid) return;
     this.loading = true;
+
     const { email, password } = this.loginForm.value;
-    this.authService.login(email, password, this.extraUserData).subscribe({
+    this.authService.login(email, password).subscribe({
       next: () => {
         this.loading = false;
-        //alert('Connexion réussie !');
-        //console.log('Connecté');
         this.router.navigate(['/dashboard']);
       },
-      error: (error) => {
+      error: (err) => {
         this.loading = false;
-        console.error('Erreur de connexion : ', error);
-        alert('Erreur de connexion : ' + error.message);
+        alert('Erreur de connexion : ' + err.message);
       }
     });
   }
+
+  // 🔹 Connexion via Google
+  async loginWithGoogle() {
+    try {
+      this.loading = true;
+      const user = await this.authService.loginWithGoogle().toPromise();
+      this.loading = false;
+      console.log('Connecté avec Google :', user);
+      this.router.navigate(['/dashboard']);
+    } catch (err: any) {
+      this.loading = false;
+      console.error(err);
+      alert('Erreur Google : ' + err.message);
+    }
+  }
+
+
 
   // async login() {
   //   this.authService.login(this.email, this.password).subscribe({
