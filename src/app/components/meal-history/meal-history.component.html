@@ -1,0 +1,22 @@
+<p>meal-history works!</p>
+<div class="visited-container">
+  <h2>🕒 Recettes consultées</h2>
+
+  <div *ngIf="loading">Chargement...</div>
+
+  <p *ngIf="!loading && visitedMeals.length === 0">
+    Aucune recette consultée pour le moment.
+  </p>
+
+  <div class="meals-grid" *ngIf="visitedMeals.length > 0">
+    <div
+      class="meal-card"
+      *ngFor="let meal of visitedMeals"
+      (click)="goToMeal(meal.idMeal)"
+    >
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+      <h4>{{ meal.strMeal }}</h4>
+      <p>{{ meal.strCategory }} • {{ meal.strArea }}</p>
+    </div>
+  </div>
+</div>

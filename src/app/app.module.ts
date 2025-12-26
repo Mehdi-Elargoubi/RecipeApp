@@ -32,6 +32,7 @@ import { environment } from './../environments/environment';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
+import { MealHistoryComponent } from './components/meal-history/meal-history.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { FavoritesComponent } from './components/favorites/favorites.component';
     MultiIngredientFilterComponent,
     ProfileComponent,
     FavoritesComponent,
+    MealHistoryComponent,
     ],
   imports: [
     BrowserModule,

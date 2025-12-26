@@ -24,17 +24,44 @@ export class MealDetailsComponent implements OnInit {
     private userService: UserService
   ) {}
 
+  // ngOnInit(): void {
+  //   const mealId = this.route.snapshot.paramMap.get('id');
+
+  //   if (!mealId) {
+  //     this.error = 'ID du repas invalide.';
+  //     this.loading = false;
+  //     return;
+  //   }
+
+  //   this.loadMeal(mealId);
+  // }
+
   ngOnInit(): void {
     const mealId = this.route.snapshot.paramMap.get('id');
+    if (!mealId) return;
 
-    if (!mealId) {
-      this.error = 'ID du repas invalide.';
-      this.loading = false;
-      return;
-    }
+    this.api.getMealById(mealId).subscribe({
+      next: async (data) => {
+        this.meal = data;
 
-    this.loadMeal(mealId);
+        // ⭐ Enregistrer comme meal visité
+        await this.userService.addVisitedMeal(this.meal);
+
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Impossible de charger le meal';
+        this.loading = false;
+      }
+    });
   }
+
+  
+
+
+
+
+
 
   private loadMeal(mealId: string): void {
     this.loading = true;
