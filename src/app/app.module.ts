@@ -30,6 +30,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { environment } from './../environments/environment';
 import { provideStorage, getStorage } from '@angular/fire/storage';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
     IngredientMealsComponent,
     MealDetailsComponent,
     MultiIngredientFilterComponent,
+    ProfileComponent,
     ],
   imports: [
     BrowserModule,

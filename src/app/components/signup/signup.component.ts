@@ -48,8 +48,8 @@ export class SignupComponent {
     if (!file) return;
 
     // ⚠️ Limite volontaire pour Firestore
-    if (file.size > 500 * 1024) {
-      alert('Image trop grande (max 500 Ko)');
+    if (file.size > 1000 * 1024) {
+      alert('Image trop grande (max 1 Mo)');
       return;
     }
 
