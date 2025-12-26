@@ -11,6 +11,13 @@
 
     <!-- Informations du meal -->
     <div class="meal-info">
+
+      <!-- ⭐ FAVORI BUTTON -->
+      <button class="favorite-btn" (click)="toggleFavorite()">
+        <span *ngIf="!isFavorite">⭐ Ajouter aux favoris</span>
+        <span *ngIf="isFavorite">💔 Retirer des favoris</span>
+      </button>
+
       <p><strong>Catégorie :</strong> {{ meal.strCategory }}</p>
       <p><strong>Origine :</strong> {{ meal.strArea }}</p>
 
@@ -31,7 +38,10 @@
       </ol>
 
       <!-- Lien YouTube -->
-      <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank" class="btn-youtube">
+      <a *ngIf="meal.strYoutube"
+         [href]="meal.strYoutube"
+         target="_blank"
+         class="btn-youtube">
         ▶ Voir vidéo
       </a>
 

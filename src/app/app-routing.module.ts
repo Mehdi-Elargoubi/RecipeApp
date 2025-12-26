@@ -15,6 +15,7 @@ import { IngredientMealsComponent } from './components/ingredient-meals/ingredie
 import { MealDetailsComponent } from './components/meal-details/meal-details.component';
 import { MultiIngredientFilterComponent } from './components/multi-ingredient-filter/multi-ingredient-filter.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -33,7 +34,9 @@ const routes: Routes = [
   { path: 'ingredients/:ingredient', component: IngredientMealsComponent },
   { path: 'meal/:id', component: MealDetailsComponent },
   { path: 'multi-ingredient-filter', component: MultiIngredientFilterComponent },
-  { path: 'profile', component: ProfileComponent}
+  { path: 'profile', component: ProfileComponent},
+  { path: 'favorites', component: FavoritesComponent }
+
 
 ];
  

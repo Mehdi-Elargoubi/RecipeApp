@@ -1,0 +1,18 @@
+<div class="favorites-container">
+  <h2>⭐ Mes Favoris</h2>
+
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <p *ngIf="!loading && favorites.length === 0">
+    Aucun favori pour le moment.
+  </p>
+
+  <div class="meals-grid" *ngIf="favorites.length > 0">
+    <div class="meal-card" *ngFor="let meal of favorites">
+      <img [src]="meal.strMealThumb" [alt]="meal.strMeal" (click)="goToMeal(meal.idMeal)">
+      <h4 (click)="goToMeal(meal.idMeal)">{{ meal.strMeal }}</h4>
+      <button class="remove-btn" (click)="remove(meal.idMeal)">❌ Retirer</button>
+    </div>
+  </div>
+</div>
