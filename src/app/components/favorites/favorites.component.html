@@ -1,5 +1,6 @@
 <div class="favorites-container">
   <h2>⭐ Mes Favoris</h2>
+  <h2 *ngIf="showTitle !== false">⭐ Mes Favoris</h2>
 
   <div *ngIf="loading" class="loading">Chargement...</div>
   <div *ngIf="error" class="error">{{ error }}</div>

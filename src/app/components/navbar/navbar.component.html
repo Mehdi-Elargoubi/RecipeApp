@@ -21,17 +21,16 @@
 
     <!-- 🔐 Si l’utilisateur est connecté -->
     <ng-container *ngIf="user$ | async as user">
-      <button routerLink="/all-meals">Toutes les recettes</button>
-      <button routerLink="/categories">Voir les catégories</button>
-      <button routerLink="/areas">Voir les régions</button>
-      <button routerLink="/multi-ingredient-filter">Filtrer par multi-ingrédients</button>
-      
-      <button routerLink="/ingredients">Voir les ingrédients</button>
+      <button routerLink="/all-meals" routerLinkActive="active">Toutes les recettes</button>
+      <button routerLink="/categories" routerLinkActive="active">Voir les catégories</button>
+      <button routerLink="/areas" routerLinkActive="active">Voir les régions</button>
+      <button routerLink="/multi-ingredient-filter" routerLinkActive="active">Filtrer par multi-ingrédients</button>
+      <button routerLink="/ingredients" routerLinkActive="active">Voir les ingrédients</button>
 
       <button routerLink="/dashboard" routerLinkActive="active">Tableau de bord</button>
-      <button routerLink="/favorites">⭐ Mes Favoris</button>
-      <button routerLink="/meal-history">📜 Historique des repas</button>
-      <button routerLink="/profile">👤 Mon Profil</button>
+      <button routerLink="/favorites" routerLinkActive="active">⭐ Mes Favoris</button>
+      <button routerLink="/meal-history" routerLinkActive="active">📜 Historique des repas</button>
+      <button routerLink="/profile" routerLinkActive="active">👤 Mon Profil</button>
       <button (click)="logout()">Déconnexion</button>
     </ng-container>
   </div>

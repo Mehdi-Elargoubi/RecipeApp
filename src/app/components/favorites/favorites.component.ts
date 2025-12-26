@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { Meal } from '../../models/meal.model';
 import { Router } from '@angular/router';
@@ -13,6 +13,8 @@ export class FavoritesComponent implements OnInit {
   favorites: Meal[] = [];
   loading = true;
   error: string | null = null;
+
+  @Input() showTitle: boolean = true;
 
   constructor(
     private userService: UserService,

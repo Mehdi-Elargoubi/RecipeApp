@@ -44,8 +44,8 @@ export class LoginComponent {
     this.authService.login(email, password, this.extraUserData).subscribe({
       next: () => {
         this.loading = false;
-        alert('Connexion réussie !');
-        console.log('Connecté');
+        //alert('Connexion réussie !');
+        //console.log('Connecté');
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
