@@ -1,4 +1,113 @@
-<h2>Admin Dashboard</h2>
+<h2>📊 Admin Dashboard</h2>
+
+<!-- ======================
+     STATS GLOBALES
+====================== -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <span class="icon">👥</span>
+    <div>
+      <p>Utilisateurs</p>
+      <strong>{{ totalUsers }}</strong>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <span class="icon">⭐</span>
+    <div>
+      <p>Favoris totaux</p>
+      <strong>{{ totalFavorites }}</strong>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <span class="icon">📈</span>
+    <div>
+      <p>Moyenne / user</p>
+      <strong>{{ avgFavorites }}</strong>
+    </div>
+  </div>
+</div>
+
+<hr />
+
+<!-- ======================
+     TOP 3 CATEGORIES
+====================== -->
+<h3>🏆 Top 3 catégories globales</h3>
+<ul class="top-categories">
+  <li *ngFor="let cat of topCategories">
+    {{ cat.category }} ({{ cat.count }})
+  </li>
+</ul>
+
+<hr />
+
+<!-- ======================
+     FAVORIS PAR UTILISATEUR
+====================== -->
+<h3>👤 Favoris par utilisateur</h3>
+<div class="bar-chart">
+  <div class="bar-row" *ngFor="let entry of favoritesByUser | keyvalue">
+    <span class="label">{{ entry.key }}</span>
+    <div class="bar-container">
+      <div class="bar" [style.width.%]="(entry.value / getMaxValue(favoritesByUser)) * 100"></div>
+    </div>
+    <span class="value">{{ entry.value }}</span>
+  </div>
+</div>
+
+<hr />
+
+<!-- ======================
+     FAVORIS PAR CATEGORIE
+====================== -->
+<h3>🍽️ Favoris par catégorie</h3>
+<div class="bar-chart">
+  <div class="bar-row" *ngFor="let entry of favoritesByCategory | keyvalue">
+    <span class="label">{{ entry.key }}</span>
+    <div class="bar-container">
+      <div class="bar category" [style.width.%]="(entry.value / getMaxValue(favoritesByCategory)) * 100"></div>
+    </div>
+    <span class="value">{{ entry.value }}</span>
+  </div>
+</div>
+
+<hr />
+
+<!-- ======================
+     CATEGORIE PREFEREE PAR USER
+====================== -->
+<h3>🍴 Catégorie préférée par utilisateur</h3>
+<table class="preferred-category-table">
+  <tr>
+    <th>Utilisateur</th>
+    <th>Catégorie préférée</th>
+    <th>Nombre de favoris</th>
+  </tr>
+  <tr *ngFor="let user of users">
+    <td>{{ user.firstName }} {{ user.lastName }}</td>
+    <td>{{ favoriteMainCategoryMap[user.uid] || 'Aucune' }}</td>
+    <td>{{ favoritesCountMap[user.uid] || 0 }}</td>
+  </tr>
+</table>
+
+
+
+<hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <h3>Gestion des utilisateurs</h3>
 <table>

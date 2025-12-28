@@ -24,63 +24,55 @@ export class MealDetailsComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  // ngOnInit(): void {
-  //   const mealId = this.route.snapshot.paramMap.get('id');
-
-  //   if (!mealId) {
-  //     this.error = 'ID du repas invalide.';
-  //     this.loading = false;
-  //     return;
-  //   }
-
-  //   this.loadMeal(mealId);
-  // }
-
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const mealId = this.route.snapshot.paramMap.get('id');
     if (!mealId) return;
 
-    this.api.getMealById(mealId).subscribe({
-      next: async (data) => {
-        this.meal = data;
+    await this.loadMeal(mealId);
+  }
+
+  // 🔥 LOGIQUE PRINCIPALE
+  private async loadMeal(mealId: string): Promise<void> {
+    this.loading = true;
+
+    try {
+      // 1️⃣ Essayer Firestore (favoris)
+      const favoriteMeal = await this.userService.getFavoriteMealById(mealId);
+
+      if (favoriteMeal) {
+        this.meal = favoriteMeal;
+        this.isFavorite = true;
 
         // ⭐ Enregistrer comme meal visité
         await this.userService.addVisitedMeal(this.meal);
 
         this.loading = false;
-      },
-      error: () => {
-        this.error = 'Impossible de charger le meal';
-        this.loading = false;
+        return;
       }
-    });
-  }
 
-  
+      // 2️⃣ Sinon → API
+      this.api.getMealById(mealId).subscribe({
+        next: async (data) => {
+          this.meal = data;
 
+          this.isFavorite = await this.userService.isFavorite(mealId);
 
+          // ⭐ Enregistrer comme meal visité
+          await this.userService.addVisitedMeal(this.meal);
 
+          this.loading = false;
+        },
+        error: () => {
+          this.error = 'Impossible de charger le meal';
+          this.loading = false;
+        }
+      });
 
-
-
-  private loadMeal(mealId: string): void {
-    this.loading = true;
-
-    this.api.getMealById(mealId).subscribe({
-      next: async (data) => {
-        this.meal = data;
-
-        // 🔹 Vérifier si le meal est déjà en favori
-        this.isFavorite = await this.userService.isFavorite(this.meal.idMeal);
-
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error(err);
-        this.error = 'Impossible de charger les détails du repas.';
-        this.loading = false;
-      }
-    });
+    } catch (err) {
+      console.error(err);
+      this.error = 'Erreur lors du chargement du meal';
+      this.loading = false;
+    }
   }
 
   // ⭐ Ajouter / retirer des favoris
@@ -91,7 +83,7 @@ export class MealDetailsComponent implements OnInit {
       if (this.isFavorite) {
         await this.userService.removeFromFavorites(this.meal.idMeal);
       } else {
-        await this.userService.addToFavorites(this.meal);
+        await this.userService.addToFavorites(this.meal); // 🔥 meal COMPLET
       }
       this.isFavorite = !this.isFavorite;
     } catch (err) {
@@ -100,16 +92,12 @@ export class MealDetailsComponent implements OnInit {
     }
   }
 
-  // ✅ Génération robuste des instructions
+  // ✅ Génération robuste des instructions (INCHANGÉ)
   get instructionsList(): string[] {
     if (!this.meal?.strInstructions) return [];
 
     const instructions = this.meal.strInstructions.trim();
 
-    /**
-     * STEP 1, Step 1, STEP 1: description
-     * + filtrage des ▢, chiffres seuls, etc.
-     */
     const stepRegex =
       /(STEP\s*\d+|Step\s*\d+)\s*[:\-]?\s*(.*?)(?=(STEP\s*\d+|Step\s*\d+)|$)/gis;
 
@@ -118,7 +106,7 @@ export class MealDetailsComponent implements OnInit {
     if (matches.length > 0) {
       return matches
         .map(match => {
-          const stepLabel = match[1].trim(); // STEP 1
+          const stepLabel = match[1].trim();
           const desc = match[2]?.trim();
 
           if (!desc || desc === '▢' || !/[a-zA-Z]/.test(desc)) {
@@ -130,7 +118,6 @@ export class MealDetailsComponent implements OnInit {
         .filter(Boolean) as string[];
     }
 
-    // 🔹 Cas instructions longues sans STEP
     const linesOrSentences = instructions
       .split(/\r?\n|(?<=\.)\s+(?=[A-Z])/)
       .map(s => s.trim())

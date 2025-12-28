@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, deleteDoc, doc, docData, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom, map, of } from 'rxjs';
 import { Meal } from '../../models/meal.model';
 
 @Injectable({ providedIn: 'root' })
@@ -45,7 +45,7 @@ export class UserService {
     return snap.exists() ? snap.data()?.['favorites'] || [] : [];
   }
 
-  async addToFavorites(meal: Meal): Promise<void> {
+  async addToFavorites001(meal: Meal): Promise<void> {
     const user = await this.getUser();
     if (!user) return;
 
@@ -164,7 +164,44 @@ export class UserService {
 
 
 
-  
+  getFavorites$() {
+  if (!this.currentUser) return of([]);
+
+  const ref = doc(this.firestore, 'users', this.currentUser.uid);
+
+  return docData(ref).pipe(
+    map((data: any) => data?.favorites || [])
+  );
+}
+
+async addToFavorites(meal: Meal): Promise<void> {
+  const user = await this.getUser();
+  if (!user) return;
+
+  const ref = doc(this.firestore, 'users', user.uid);
+  const snap = await getDoc(ref);
+
+  const favorites: Meal[] = snap.exists()
+    ? snap.data()?.['favorites'] || []
+    : [];
+
+  if (!favorites.find(f => f.idMeal === meal.idMeal)) {
+    favorites.push(meal); // 🔥 MEAL COMPLET
+    await updateDoc(ref, { favorites });
+  }
+}
+
+
+async getFavoriteMealById(mealId: string): Promise<Meal | null> {
+  const user = await this.getUser();
+  if (!user) return null;
+
+  const snap = await getDoc(doc(this.firestore, 'users', user.uid));
+  if (!snap.exists()) return null;
+
+  const favorites: Meal[] = snap.data()?.['favorites'] || [];
+  return favorites.find(m => m.idMeal === mealId) || null;
+}
 
   
 
