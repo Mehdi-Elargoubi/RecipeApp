@@ -1,0 +1,108 @@
+/* ===== GLOBAL ===== */
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h3 {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+h4 {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+/* ===== TABLES ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background-color: #1e88e5;
+  color: white;
+  text-align: left;
+  padding: 12px;
+  font-size: 14px;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+tr:hover td {
+  background-color: #f5f7fa;
+}
+
+/* ===== BUTTONS ===== */
+button {
+  padding: 6px 12px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* Admin / User */
+button:first-child {
+  background-color: #43a047;
+  color: white;
+}
+
+/* Delete */
+button:last-child {
+  background-color: #e53935;
+  color: white;
+}
+
+/* ===== USER BLOCK ===== */
+.user-meals-block {
+  margin-bottom: 40px;
+  padding: 15px;
+  background: #fafafa;
+  border-left: 5px solid #1e88e5;
+  border-radius: 8px;
+}
+
+/* Empty favorites */
+.empty {
+  color: #888;
+  font-style: italic;
+  padding: 10px 0;
+}
+
+.meal-link {
+  cursor: pointer;
+  color: #ff7043;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.meal-link:hover {
+  text-decoration: underline;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background-color: #f7f7f7;
+}

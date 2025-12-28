@@ -10,19 +10,7 @@ import { User } from '@angular/fire/auth';
 export class AuthGuard implements CanActivate {
   //constructor(private authService: AuthService, private router: Router) {}  
   constructor(private authService: AuthService, private auth: Auth, private router: Router) {}
-
-  // canActivate(): Observable<boolean> {
-  //   return this.authService.authState().pipe(
-  //     map(user => {
-  //       if (user) {
-  //         return true;
-  //       }
-  //       this.router.navigate(['/login']);
-  //       return false;
-  //     })
-  //   );
-  // }
-
+  
   async canActivate(): Promise<boolean> {
     // Attendre que Firebase récupère l'état de l'utilisateur
     const user = await new Promise<User | null>((resolve) => {

@@ -6,7 +6,7 @@ export interface User {
   email: string;
   photoURL?: string | null;
   photoBase64?: string; // Add this line
-
+  role: 'user'
 //   displayName?: string | null;
 //   roles?: string[];
 //   createdAt?: string | number | Date;

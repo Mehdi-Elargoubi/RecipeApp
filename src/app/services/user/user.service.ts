@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Firestore, doc, docData, getDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, deleteDoc, doc, docData, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { Meal } from '../../models/meal.model';
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +15,6 @@ export class UserService {
     });
   }
 
-  // 🔐 Attendre l'utilisateur Firebase (IMPORTANT)
   private async getUser(): Promise<User | null> {
     if (this.currentUser) return this.currentUser;
 
@@ -27,7 +26,6 @@ export class UserService {
     });
   }
 
-  // 👤 Profil utilisateur
   getUserProfile(): Observable<any> {
     if (!this.currentUser) throw new Error('Utilisateur non connecté');
     const ref = doc(this.firestore, 'users', this.currentUser.uid);
@@ -40,13 +38,11 @@ export class UserService {
     return updateDoc(ref, data);
   }
 
-  // ⭐ FAVORIS
   async getFavorites(): Promise<Meal[]> {
     const user = await this.getUser();
     if (!user) return [];
-
     const snap = await getDoc(doc(this.firestore, 'users', user.uid));
-    return snap.exists() ? snap.data()['favorites'] || [] : [];
+    return snap.exists() ? snap.data()?.['favorites'] || [] : [];
   }
 
   async addToFavorites(meal: Meal): Promise<void> {
@@ -55,8 +51,7 @@ export class UserService {
 
     const ref = doc(this.firestore, 'users', user.uid);
     const snap = await getDoc(ref);
-
-    let favorites: Meal[] = snap.exists() ? snap.data()['favorites'] || [] : [];
+    let favorites: Meal[] = snap.exists() ? snap.data()?.['favorites'] || [] : [];
 
     if (!favorites.find(f => f.idMeal === meal.idMeal)) {
       favorites.push({
@@ -80,12 +75,9 @@ export class UserService {
 
     const ref = doc(this.firestore, 'users', user.uid);
     const snap = await getDoc(ref);
-
     if (!snap.exists()) return;
 
-    const favorites = (snap.data()['favorites'] || [])
-      .filter((m: Meal) => m.idMeal !== mealId);
-
+    const favorites = (snap.data()?.['favorites'] || []).filter((m: Meal) => m.idMeal !== mealId);
     await updateDoc(ref, { favorites });
   }
 
@@ -94,15 +86,13 @@ export class UserService {
     return favorites.some(m => m.idMeal === mealId);
   }
 
-  // 🕒 HISTORIQUE DES MEALS VISITÉS
   async addVisitedMeal(meal: Meal): Promise<void> {
     const user = await this.getUser();
     if (!user) return;
 
     const ref = doc(this.firestore, 'users', user.uid);
     const snap = await getDoc(ref);
-
-    let visited = snap.exists() ? snap.data()['visitedMeals'] || [] : [];
+    let visited = snap.exists() ? snap.data()?.['visitedMeals'] || [] : [];
 
     visited = visited.filter((m: any) => m.idMeal !== meal.idMeal);
 
@@ -123,8 +113,59 @@ export class UserService {
   async getVisitedMeals(): Promise<Meal[]> {
     const user = await this.getUser();
     if (!user) return [];
+    const snap = await getDoc(doc(this.firestore, 'users', user.uid));
+    return snap.exists() ? snap.data()?.['visitedMeals'] || [] : [];
+  }
+
+  async isAdmin(): Promise<boolean> {
+    const user = await this.getUser();
+    if (!user) return false;
 
     const snap = await getDoc(doc(this.firestore, 'users', user.uid));
-    return snap.exists() ? snap.data()['visitedMeals'] || [] : [];
+    console.log('USER DATA:', snap.data());
+    return snap.exists() && snap.data()?.['role'] === 'admin';
   }
+
+  async getAllUsers(): Promise<any[]> {
+    const usersCol = collection(this.firestore, 'users');
+    const usersSnap$ = collectionData(usersCol, { idField: 'uid' });
+    const usersSnap = await firstValueFrom(usersSnap$);
+    return usersSnap || [];
+  }
+
+  async setUserRole(uid: string, role: 'user' | 'admin') {
+    await updateDoc(doc(this.firestore, 'users', uid), { role });
+  }
+
+  async deleteUser(uid: string) {
+    await deleteDoc(doc(this.firestore, 'users', uid));
+  }
+
+  async updateProfileForUser(uid: string, data: any) {
+    await updateDoc(doc(this.firestore, 'users', uid), data);
+  }
+
+
+
+  async updateFavoriteMeal(userId: string, updatedMeal: any): Promise<void> {
+    const ref = doc(this.firestore, 'users', userId);
+    const snap = await getDoc(ref);
+
+    if (!snap.exists()) return;
+
+    const favorites = snap.data()?.['favorites'] || [];
+
+    const updatedFavorites = favorites.map((m: any) =>
+      m.idMeal === updatedMeal.idMeal ? updatedMeal : m
+    );
+
+    await updateDoc(ref, { favorites: updatedFavorites });
+  }
+
+
+
+  
+
+  
+
 }

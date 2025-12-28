@@ -33,6 +33,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { MealHistoryComponent } from './components/meal-history/meal-history.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MealHistoryComponent } from './components/meal-history/meal-history.com
     ProfileComponent,
     FavoritesComponent,
     MealHistoryComponent,
+    AdminDashboardComponent,
     ],
   imports: [
     BrowserModule,

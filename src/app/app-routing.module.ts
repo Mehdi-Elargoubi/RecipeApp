@@ -17,6 +17,8 @@ import { MultiIngredientFilterComponent } from './components/multi-ingredient-fi
 import { ProfileComponent } from './components/profile/profile.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { MealHistoryComponent } from './components/meal-history/meal-history.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminGuard } from './core/admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -38,6 +40,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent},
   { path: 'favorites', component: FavoritesComponent },
   { path: 'meal-history', component: MealHistoryComponent },
+  { path: 'admin', component: AdminDashboardComponent, canActivate: [AdminGuard]},
+
 
 
 ];

@@ -1,0 +1,64 @@
+<h2>Admin Dashboard</h2>
+
+<h3>Gestion des utilisateurs</h3>
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Nom</th>
+    <th>Rôle</th>
+    <th>Favoris</th>
+    <th>Catégories préférées</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr *ngFor="let u of users">
+    <td>{{ u.email }}</td>
+    <td>{{ u.firstName }} {{ u.lastName }}</td>
+    <td>{{ u.role || 'user' }}</td>
+    <td>{{ favoritesCountMap[u.uid] || 0 }}</td>
+    <td>
+      {{ favoriteCategoriesMap[u.uid].length
+        ? favoriteCategoriesMap[u.uid].join(', ')
+        : 'Aucune' }}
+    </td>
+    <td>
+      <button (click)="toggleAdminRole(u)">
+        {{ u.role === 'admin' ? 'Retirer admin' : 'Rendre admin' }}
+      </button>
+      <button (click)="deleteUser(u.uid)">Supprimer</button>
+    </td>
+  </tr>
+</table>
+
+<hr />
+
+<h3>Gestion des meals favoris par utilisateur</h3>
+
+<div *ngFor="let u of users">
+  <h4>{{ u.firstName }} {{ u.lastName }}</h4>
+
+  <table *ngIf="userMealsMap[u.uid]?.length; else noFav">
+    <tr>
+      <th>Nom</th>
+      <th>Catégorie</th>
+      <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let m of userMealsMap[u.uid]">
+      <td>
+        <a [routerLink]="['/meal', m.idMeal]" class="meal-link">
+          {{ m.strMeal }}
+        </a>
+      </td>
+      <td>{{ m.strCategory }}</td>
+      <td>
+        <button (click)="editMeal(u.uid, m)">Modifier</button>
+        <button (click)="deleteMeal(u.uid, m.idMeal)">Supprimer</button>
+      </td>
+    </tr>
+  </table>
+
+  <ng-template #noFav>
+    <p>Aucun favori</p>
+  </ng-template>
+</div>

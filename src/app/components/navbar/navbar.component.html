@@ -1,37 +1,34 @@
-<!-- <nav class="navbar">
-  <h2>projet devops</h2>
-  <div class="nav-buttons">
-    <button routerLink="/login" routerLinkActive="active">Connexion</button>
-    <button routerLink="/signup" routerLinkActive="active">Inscription</button>
-    <button routerLink="/dashboard" routerLinkActive="active">Tableau de bord</button>
-    <button *ngIf="user$ | async as user" (click)="logout()">Déconnexion</button>
-  </div>
-</nav> -->
-
-
 <nav class="navbar">
-  <h2>projet devops</h2>
+  <h2>Projet DevOps</h2>
 
   <div class="nav-buttons">
-    <!-- 🔓 Si l’utilisateur n’est PAS connecté -->
+
+    <!-- NON CONNECTÉ -->
     <ng-container *ngIf="!(user$ | async)">
-      <button routerLink="/login" routerLinkActive="active">Connexion</button>
-      <button routerLink="/signup" routerLinkActive="active">Inscription</button>
+      <button routerLink="/login">Connexion</button>
+      <button routerLink="/signup">Inscription</button>
     </ng-container>
 
-    <!-- 🔐 Si l’utilisateur est connecté -->
-    <ng-container *ngIf="user$ | async as user">
-      <button routerLink="/all-meals" routerLinkActive="active">Toutes les recettes</button>
-      <button routerLink="/categories" routerLinkActive="active">Voir les catégories</button>
-      <button routerLink="/areas" routerLinkActive="active">Voir les régions</button>
-      <button routerLink="/multi-ingredient-filter" routerLinkActive="active">Filtrer par multi-ingrédients</button>
-      <button routerLink="/ingredients" routerLinkActive="active">Voir les ingrédients</button>
+    <!-- CONNECTÉ -->
+    <ng-container *ngIf="user$ | async">
 
-      <button routerLink="/dashboard" routerLinkActive="active">Tableau de bord</button>
-      <button routerLink="/favorites" routerLinkActive="active">⭐ Mes Favoris</button>
-      <button routerLink="/meal-history" routerLinkActive="active">📜 Historique des repas</button>
-      <button routerLink="/profile" routerLinkActive="active">👤 Mon Profil</button>
+      <button *ngIf="isAdmin" routerLink="/admin">
+        🔐 Admin Dashboard
+      </button>
+
+      <button routerLink="/all-meals">Toutes les recettes</button>
+      <button routerLink="/categories">Catégories</button>
+      <button routerLink="/areas">Régions</button>
+      <button routerLink="/ingredients">Ingrédients</button>
+      <button routerLink="/multi-ingredient-filter">Multi-ingrédients</button>
+
+      <button routerLink="/dashboard">Dashboard</button>
+      <button routerLink="/favorites">⭐ Favoris</button>
+      <button routerLink="/meal-history">📜 Historique</button>
+      <button routerLink="/profile">👤 Profil</button>
+
       <button (click)="logout()">Déconnexion</button>
     </ng-container>
+
   </div>
 </nav>
