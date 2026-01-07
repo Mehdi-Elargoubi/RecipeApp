@@ -1,83 +1,57 @@
-<!-- <form (ngSubmit)="login()" #f="ngForm">
-  <input name="email" [(ngModel)]="email" type="email" required placeholder="Email" />
-  <input name="password" [(ngModel)]="password" type="password" required placeholder="Mot de passe" />
-  <button type="submit">Se connecter</button>
-</form>
+<div class="login-wrapper">
 
-<button (click)="loginWithGoogle()">Se connecter avec Google</button> -->
-
-<hr/>
-<!-- <button (click)="register()">S'inscrire</button>
-<button (click)="reset()">Mot de passe oublié</button> -->
-
-<!-- <div class="login-container">
   <div class="login-card">
-    <h2>Connexion</h2>
 
-    <form (ngSubmit)="login()">
+    <h2 class="login-title">Connexion</h2>
+    <p class="login-subtitle">Accédez à votre espace recettes</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
       <div class="form-group">
-        <label for="email">Adresse email</label>
-        <input 
-          type="email" 
-          id="email" 
-          [(ngModel)]="email" 
-          name="email"
-          required
-          placeholder="Entrez votre email"
+        <label>Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="exemple@email.com"
         />
       </div>
 
       <div class="form-group">
-        <label for="password">Mot de passe</label>
-        <input 
-          type="password" 
-          id="password" 
-          [(ngModel)]="password" 
-          name="password"
-          required
-          placeholder="Entrez votre mot de passe"
+        <label>Mot de passe</label>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Votre mot de passe"
         />
       </div>
 
-      <button type="submit" class="btn-primary">Se connecter</button>
-
-      <button type="button" class="btn-secondary" (click)="loginWithGoogle()">
-        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="google-icon">
-        Connexion avec Google
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Connexion...' : 'Se connecter' }}
       </button>
 
-      <p class="forgot" (click)="reset()">Mot de passe oublié ?</p>
-
-      <p class="signup-text">
-        Pas encore de compte ?
-        <a routerLink="/signup">Inscrivez-vous ici</a>
-      </p>
     </form>
 
-    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+    <button class="btn-google" (click)="loginWithGoogle()">
+      <img
+        src="https://www.svgrepo.com/show/475656/google-color.svg"
+        alt="Google"
+      />
+      Se connecter avec Google
+    </button>
+
+    <p class="signup-text">
+      Pas encore de compte ?
+      <a routerLink="/signup">Créer un compte</a>
+    </p>
+
+    <p *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </p>
+
   </div>
-</div> -->
 
-
-
-
-
-
-
-
-
-<div class="login-wrapper">
-  <div class="login-card">
-    <h2>Connexion</h2>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <input type="email" formControlName="email" placeholder="Email" required />
-      <input type="password" formControlName="password" placeholder="Mot de passe" required />
-      <button type="submit" [disabled]="loading">{{ loading ? 'Connexion...' : 'Se connecter' }}</button>
-    </form>
-
-    <button class="google-btn" (click)="loginWithGoogle()">Se connecter avec Google</button>
-
-    <p>Pas encore de compte ? <a routerLink="/signup">Créer un compte</a></p>
-  </div>
 </div>

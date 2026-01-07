@@ -1,9 +1,15 @@
 <div class="visited-container">
-  <h2>🕒 Recettes consultées</h2>
 
-  <div *ngIf="loading">Chargement...</div>
+  <h2 class="visited-title">🕒 Recettes consultées</h2>
 
-  <p *ngIf="!loading && visitedMeals.length === 0">
+  <div *ngIf="loading" class="loading">
+    Chargement...
+  </div>
+
+  <p
+    class="empty-state"
+    *ngIf="!loading && visitedMeals.length === 0"
+  >
     Aucune recette consultée pour le moment.
   </p>
 
@@ -13,9 +19,19 @@
       *ngFor="let meal of visitedMeals"
       (click)="goToMeal(meal.idMeal)"
     >
-      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
-      <h4>{{ meal.strMeal }}</h4>
-      <p>{{ meal.strCategory }} • {{ meal.strArea }}</p>
+
+      <img
+        [src]="meal.strMealThumb"
+        [alt]="meal.strMeal"
+      >
+
+      <h3>{{ meal.strMeal }}</h3>
+
+      <p class="meal-meta">
+        {{ meal.strCategory }} • {{ meal.strArea }}
+      </p>
+
     </div>
   </div>
+
 </div>

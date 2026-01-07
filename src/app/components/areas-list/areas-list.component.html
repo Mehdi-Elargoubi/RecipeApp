@@ -1,6 +1,6 @@
 <div class="areas-container">
 
-  <h2 class="title">🌍 Liste des Meals par Région</h2>
+  <h2 class="areas-title">🌍 Liste des Meals par Région</h2>
 
   <!-- Loading -->
   <div *ngIf="loading" class="loading">
@@ -13,7 +13,7 @@
   </div>
 
   <!-- Area List -->
-  <div class="area-grid" *ngIf="!loading && !error">
+  <div class="areas-grid" *ngIf="!loading && !error">
     <div
       class="area-card"
       *ngFor="let area of areas"
@@ -22,5 +22,5 @@
       <span class="area-text">{{ area.strArea }}</span>
     </div>
   </div>
-  
+
 </div>

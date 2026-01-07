@@ -1,1 +1,119 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* =========================
+   GLOBAL RESET
+   ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  color: #2c3e50;
+}
+
+/* =========================
+   GLOBAL TITLES
+   ========================= */
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   STATES
+   ========================= */
+.loading,
+.error {
+  font-size: 18px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+/* =========================
+   MEALS GRID (TEMPLATE)
+   ========================= */
+.meals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* =========================
+   MEAL CARD (TEMPLATE)
+   ========================= */
+.meal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.meal-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Image */
+.meal-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Content */
+.meal-card h3 {
+  font-size: 20px;
+  margin: 14px 16px 6px;
+}
+
+.meal-card p {
+  font-size: 14px;
+  margin: 0 16px 6px;
+  color: #555;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+.btn-primary {
+  margin: auto 16px 16px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #e67e22, #d35400);
+  transform: scale(1.02);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 600px) {
+  .meal-card img {
+    height: 160px;
+  }
+}
+

@@ -8,6 +8,8 @@ export interface Meal {
   strTags: string | null;
   strYoutube: string | null;
   ingredients: Ingredient[];
+
+  note?: string;
 }
 
 

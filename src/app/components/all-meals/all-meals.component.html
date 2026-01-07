@@ -11,7 +11,11 @@
   </div>
 
   <div class="meals-grid">
-    <div class="meal-card" *ngFor="let meal of meals" [routerLink]="['/meal', meal.idMeal]">
+    <div
+      class="meal-card"
+      *ngFor="let meal of meals"
+      [routerLink]="['/meal', meal.idMeal]"
+    >
 
       <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
 
@@ -20,18 +24,20 @@
       <p><strong>Catégorie :</strong> {{ meal.strCategory }}</p>
       <p><strong>Origine :</strong> {{ meal.strArea }}</p>
 
-      <h4>Ingrédients :</h4>
-      <ul>
-        <li *ngFor="let ing of meal.ingredients">
-          {{ ing.measure }} {{ ing.name }}
-        </li>
-      </ul>
-
-      <button (click)="showInstructions(meal.strInstructions); $event.stopPropagation()">
+      <button
+        class="btn-primary"
+        (click)="showInstructions(meal.strInstructions); $event.stopPropagation()"
+      >
         Voir instructions
       </button>
 
-      <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank" (click)="$event.stopPropagation()">
+      <a
+        *ngIf="meal.strYoutube"
+        class="btn-primary"
+        [href]="meal.strYoutube"
+        target="_blank"
+        (click)="$event.stopPropagation()"
+      >
         🎬 Voir la vidéo
       </a>
 

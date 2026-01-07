@@ -1,17 +1,34 @@
 <div class="area-meals-container">
 
-  <h2>Plats de la région : {{ area }}</h2>
+  <h2>🍽️ Plats de la région : {{ area }}</h2>
 
-  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="loading" class="loading">
+    Chargement...
+  </div>
 
   <div class="meals-grid">
-    <div class="meal-card" *ngFor="let meal of meals" [routerLink]="['/meal', meal.idMeal]">
-      <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
+    <div
+      class="meal-card"
+      *ngFor="let meal of meals"
+      [routerLink]="['/meal', meal.idMeal]"
+    >
+
+      <img
+        [src]="meal.strMealThumb"
+        [alt]="meal.strMeal"
+      >
+
       <h3>{{ meal.strMeal }}</h3>
 
-      <a [routerLink]="['/meal', meal.idMeal]" class="btn-details">
+      <a
+        class="btn-details"
+        [routerLink]="['/meal', meal.idMeal]"
+        (click)="$event.stopPropagation()"
+      >
         Voir détails
       </a>
+
     </div>
   </div>
+
 </div>

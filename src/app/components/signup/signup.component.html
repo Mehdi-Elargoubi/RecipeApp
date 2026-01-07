@@ -1,51 +1,97 @@
-<div class="signup-container">
-  <h2>Créer un compte</h2>
+<div class="signup-wrapper">
 
-  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="signup-card">
 
-    <!-- Prénom et Nom -->
-    <div class="form-group">
-      <label for="firstName">Prénom</label>
-      <input id="firstName" formControlName="firstName" type="text" placeholder="Prénom" />
-    </div>
+    <h2 class="signup-title">Créer un compte</h2>
+    <p class="signup-subtitle">Rejoignez la communauté de recettes</p>
 
-    <div class="form-group">
-      <label for="lastName">Nom</label>
-      <input id="lastName" formControlName="lastName" type="text" placeholder="Nom" />
-    </div>
+    <form
+      [formGroup]="signupForm"
+      (ngSubmit)="onSubmit()"
+      class="signup-form"
+    >
 
-    <!-- Date de naissance -->
-    <div class="form-group">
-      <label for="birthDate">Date de naissance</label>
-      <input id="birthDate" formControlName="birthDate" type="date" />
-    </div>
-
-    <!-- Email et mot de passe -->
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email" placeholder="Email" />
-    </div>
-
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input id="password" formControlName="password" type="password" placeholder="Mot de passe" />
-    </div>
-
-    <!-- Photo de profil -->
-    <div class="form-group">
-      <label for="photo">Photo de profil</label>
-      <input id="photo" type="file" (change)="onFileSelected($event)" />
-      <div class="preview" *ngIf="previewUrl">
-        <img [src]="previewUrl" alt="Aperçu de la photo" />
+      <div class="form-group">
+        <label>Prénom</label>
+        <input
+          type="text"
+          formControlName="firstName"
+          placeholder="Votre prénom"
+        />
       </div>
-    </div>
 
-    <!-- Bouton submit -->
-    <button type="submit" [disabled]="loading">
-      {{ loading ? 'Inscription...' : 'S’inscrire' }}
+      <div class="form-group">
+        <label>Nom</label>
+        <input
+          type="text"
+          formControlName="lastName"
+          placeholder="Votre nom"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Date de naissance</label>
+        <input
+          type="date"
+          formControlName="birthDate"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="exemple@email.com"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Mot de passe"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Photo de profil</label>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+        />
+        <div class="preview" *ngIf="previewUrl">
+          <img [src]="previewUrl" alt="Aperçu photo" />
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Inscription...' : 'S’inscrire' }}
+      </button>
+
+    </form>
+
+    <button
+      class="btn-google"
+      (click)="signupWithGoogle()"
+    >
+      <img
+        src="https://www.svgrepo.com/show/475656/google-color.svg"
+        alt="Google"
+      />
+      S’inscrire avec Google
     </button>
-  </form>
 
-  <button class="google-btn" (click)="signupWithGoogle()">S’inscrire avec Google</button>
-  <p>Vous avez déjà un compte ? <a routerLink="/login">Connectez-vous ici</a></p>
+    <p class="login-text">
+      Vous avez déjà un compte ?
+      <a routerLink="/login">Connectez-vous</a>
+    </p>
+    
+  </div>
+
 </div>

@@ -1,27 +1,43 @@
-/* Container principal */
+/* =========================
+   PAGE
+   ========================= */
+.profile-page {
+  max-width: 1300px;
+  margin: auto;
+  padding: 24px;
+}
+
+/* =========================
+   PROFILE CARD
+   ========================= */
 .profile-container {
-  max-width: 480px;
-  margin: 40px auto;
-  padding: 30px;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  padding: 32px;
   background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-/* Titre */
-.profile-container h2 {
+/* =========================
+   TITLE
+   ========================= */
+.profile-title {
   text-align: center;
-  margin-bottom: 25px;
-  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #2c3e50;
 }
 
-/* Section photo */
+/* =========================
+   AVATAR
+   ========================= */
 .photo-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 28px;
 }
 
 .user-avatar {
@@ -29,119 +45,117 @@
   height: 110px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #4f46e5;
+  border: 3px solid #1976d2;
   margin-bottom: 10px;
 }
 
-.photo-section input[type="file"] {
-  font-size: 13px;
-}
-
-/* Formulaire */
-form {
+/* =========================
+   FORM
+   ========================= */
+.profile-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* Labels */
-label {
-  display: flex;
-  flex-direction: column;
+.form-group label {
   font-size: 14px;
+  font-weight: 600;
   color: #444;
+  margin-bottom: 6px;
+  display: block;
 }
 
-/* Inputs */
-input {
-  margin-top: 6px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
   font-size: 14px;
-  transition: all 0.2s ease;
+  transition: border 0.2s, box-shadow 0.2s;
 }
 
-/* Focus */
-input:focus {
+.form-group input:focus {
   outline: none;
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15);
 }
 
-/* Champs en lecture seule */
+/* Readonly fields */
 input[readonly],
 input:disabled {
-  background-color: #f3f4f6;
+  background: #f3f4f6;
   color: #6b7280;
-  cursor: not-allowed;
 }
 
-/* Champ email (toujours grisé) */
 .readonly-field {
-  background-color: #e5e7eb;
-  color: #6b7280;
+  background: #e5e7eb;
 }
 
-/* Boutons */
+/* =========================
+   BUTTONS
+   ========================= */
 .buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   margin-top: 20px;
 }
 
-button {
+.buttons button {
   flex: 1;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
+  padding: 12px;
+  border-radius: 10px;
   border: none;
-  transition: all 0.2s ease;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Bouton Modifier */
-button:first-child {
-  background-color: #4f46e5;
-  color: white;
+.buttons button:hover {
+  transform: translateY(-2px);
 }
 
-button:first-child:hover {
-  background-color: #4338ca;
+/* Variants */
+.btn-primary {
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  color: #fff;
 }
 
-/* Bouton Sauvegarder */
-button[type="submit"] {
-  background-color: #16a34a;
-  color: white;
+.btn-success {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
 }
 
-button[type="submit"]:hover {
-  background-color: #15803d;
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
 }
 
-/* Bouton Annuler */
-button:last-child {
-  background-color: #ef4444;
-  color: white;
-}
-
-button:last-child:hover {
-  background-color: #dc2626;
-}
-
-/* Bouton désactivé */
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
-/* Responsive */
-@media (max-width: 520px) {
+/* =========================
+   SECTIONS
+   ========================= */
+.profile-section {
+  margin-top: 40px;
+}
+
+.profile-section h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 600px) {
   .profile-container {
-    margin: 20px;
-    padding: 20px;
+    padding: 24px;
   }
 
   .buttons {

@@ -10,34 +10,36 @@ import { Meal } from '../../../models/meal.model';
 export class AdminDashboardComponent implements OnInit {
 
   // ======================
-  // 🔹 DATA USERS & MEALS
+  // 🔹 USERS & FAVORITES
   // ======================
   users: any[] = [];
-
   userMealsMap: { [uid: string]: Meal[] } = {};
   favoritesCountMap: { [uid: string]: number } = {};
   favoriteCategoriesMap: { [uid: string]: string[] } = {};
-  favoriteMainCategoryMap: { [uid: string]: string } = {}; // top catégorie par user
+  favoriteMainCategoryMap: { [uid: string]: string } = {};
 
   // ======================
-  // 🔹 STATS GLOBALES
+  // 🔹 GLOBAL STATS
   // ======================
   totalUsers = 0;
   totalFavorites = 0;
   avgFavorites = 0;
 
-  // ======================
-  // 🔹 STATS POUR DASHBOARD
-  // ======================
   favoritesByCategory: { [key: string]: number } = {};
   favoritesByUser: { [key: string]: number } = {};
   topCategories: { category: string, count: number }[] = [];
 
+  // ======================
+  // 🔹 MODAL EDIT
+  // ======================
+  showEditModal = false;
+  editingMeal: Meal | null = null;
+  editName = '';
+  editCategory = '';
+  editNote = '';
+
   constructor(private userService: UserService) {}
 
-  // ======================
-  // 🔹 INIT
-  // ======================
   async ngOnInit() {
     await this.loadUsers();
   }
@@ -48,7 +50,6 @@ export class AdminDashboardComponent implements OnInit {
   async loadUsers() {
     this.users = await this.userService.getAllUsers();
 
-    // Reset
     this.userMealsMap = {};
     this.favoritesCountMap = {};
     this.favoriteCategoriesMap = {};
@@ -62,23 +63,22 @@ export class AdminDashboardComponent implements OnInit {
     this.users.forEach(user => {
       const favorites: Meal[] = user.favorites || [];
 
-      // 🔹 Mapping
       this.userMealsMap[user.uid] = favorites;
       this.favoritesCountMap[user.uid] = favorites.length;
-      // this.favoritesByUser[user.email || user.uid] = favorites.length;
-      const fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.uid;
+
+      const fullName =
+        `${user.firstName || ''} ${user.lastName || ''}`.trim()
+        || user.email
+        || user.uid;
+
       this.favoritesByUser[fullName] = favorites.length;
-
-
-      // 🔹 Top catégorie par user
       this.favoriteMainCategoryMap[user.uid] =
         this.getMainFavoriteCategory(favorites);
 
-      // 🔹 Total favoris
-      this.totalFavorites += favorites.length;
+      this.favoriteCategoriesMap[user.uid] =
+        this.getFavoriteCategories(favorites);
 
-      // 🔹 Catégories globales
-      this.favoriteCategoriesMap[user.uid] = this.getFavoriteCategories(favorites);
+      this.totalFavorites += favorites.length;
 
       favorites.forEach(meal => {
         if (!meal.strCategory) return;
@@ -87,12 +87,10 @@ export class AdminDashboardComponent implements OnInit {
       });
     });
 
-    // 🔹 Moyenne favoris / user
-    this.avgFavorites = this.totalUsers > 0
+    this.avgFavorites = this.totalUsers
       ? Math.round(this.totalFavorites / this.totalUsers)
       : 0;
 
-    // 🔹 Top 3 catégories globales
     this.topCategories = Object.entries(this.favoritesByCategory)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 3)
@@ -104,24 +102,18 @@ export class AdminDashboardComponent implements OnInit {
   // ======================
   getFavoriteCategories(favorites: Meal[]): string[] {
     const counter: { [key: string]: number } = {};
-    favorites.forEach(meal => {
-      if (!meal.strCategory) return;
-      counter[meal.strCategory] = (counter[meal.strCategory] || 0) + 1;
+    favorites.forEach(m => {
+      if (!m.strCategory) return;
+      counter[m.strCategory] = (counter[m.strCategory] || 0) + 1;
     });
     return Object.entries(counter)
       .sort((a, b) => b[1] - a[1])
-      .map(e => e[0]);
+      .map(([c]) => c);
   }
 
   getMainFavoriteCategory(favorites: Meal[]): string {
     if (!favorites.length) return 'Aucune';
-    const counter: { [key: string]: number } = {};
-    favorites.forEach(meal => {
-      if (!meal.strCategory) return;
-      counter[meal.strCategory] = (counter[meal.strCategory] || 0) + 1;
-    });
-    return Object.entries(counter)
-      .sort((a, b) => b[1] - a[1])[0][0];
+    return this.getFavoriteCategories(favorites)[0];
   }
 
   getMaxValue(map: { [key: string]: number }): number {
@@ -129,11 +121,13 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   // ======================
-  // 🔹 ACTIONS ADMIN
+  // 🔹 ADMIN ACTIONS
   // ======================
   async toggleAdminRole(user: any) {
-    const newRole = user.role === 'admin' ? 'user' : 'admin';
-    await this.userService.setUserRole(user.uid, newRole);
+    await this.userService.setUserRole(
+      user.uid,
+      user.role === 'admin' ? 'user' : 'admin'
+    );
     await this.loadUsers();
   }
 
@@ -143,31 +137,42 @@ export class AdminDashboardComponent implements OnInit {
     await this.loadUsers();
   }
 
-  // ======================
-  // 🔹 GESTION FAVORIS USER
-  // ======================
   async deleteMeal(userUid: string, mealId: string) {
-    if (!confirm('Supprimer ce meal des favoris ?')) return;
-    const favorites = this.userMealsMap[userUid].filter(m => m.idMeal !== mealId);
+    if (!confirm('Supprimer ce meal des favoris de cet utilisateur ?')) return;
+    const favorites =
+      this.userMealsMap[userUid].filter(m => m.idMeal !== mealId);
     await this.userService.updateProfileForUser(userUid, { favorites });
     await this.loadUsers();
   }
 
-  async editMeal(userUid: string, meal: Meal) {
-    const newName = prompt('Nom du meal', meal.strMeal);
-    if (newName === null) return;
+  // ======================
+  // 🔥 MODAL EDIT MEAL
+  // ======================
+  openEditMealModal(meal: Meal) {
+    this.editingMeal = meal;
+    this.editName = meal.strMeal;
+    this.editCategory = meal.strCategory;
+    this.editNote = (meal as any).note || '';
+    this.showEditModal = true;
+  }
 
-    const newCategory = prompt('Catégorie', meal.strCategory);
-    if (newCategory === null) return;
+  closeEditMealModal() {
+    this.showEditModal = false;
+    this.editingMeal = null;
+  }
 
-    const note = prompt('Note admin (optionnelle)', (meal as any).note || '');
-    await this.userService.updateFavoriteMeal(userUid, {
-      ...meal,
-      strMeal: newName,
-      strCategory: newCategory,
-      note
-    });
+  async saveMealEdit() {
+    if (!this.editingMeal) return;
 
+    const updatedMeal: Meal = {
+      ...this.editingMeal,
+      strMeal: this.editName.trim(),
+      strCategory: this.editCategory.trim(),
+      ...(this.editNote && { note: this.editNote })
+    };
+
+    await this.userService.updateMealForAllUsers(updatedMeal);
+    this.closeEditMealModal();
     await this.loadUsers();
   }
 }

@@ -60,3 +60,12 @@
   background: #f8f8f8;
   box-shadow: 0 4px 16px rgba(0,0,0,0.20);
 }
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 600px) {
+  .category-header img {
+    height: 160px;
+  }
+}

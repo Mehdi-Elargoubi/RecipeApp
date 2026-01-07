@@ -1,66 +1,108 @@
-<div class="profile-container" *ngIf="userData">
+<div class="profile-page" *ngIf="userData">
 
-  <h2>Mon Profil</h2>
+  <!-- PROFILE CARD -->
+  <div class="profile-container">
 
-  <div class="photo-section">
-    <img
-      *ngIf="previewUrl"
-      [src]="previewUrl"
-      alt="Photo utilisateur"
-      class="user-avatar"
-    />
-    <input type="file" (change)="onFileSelected($event)" [disabled]="!isEditing" />
-  </div>
+    <h2 class="profile-title">👤 Mon Profil</h2>
 
-  <form [formGroup]="profileForm" (ngSubmit)="onSave()">
-
-    <label>
-      Prénom :
-      <input formControlName="firstName" type="text" [readonly]="!isEditing" />
-    </label>
-
-    <label>
-      Nom :
-      <input formControlName="lastName" type="text" [readonly]="!isEditing" />
-    </label>
-
-    <label>
-      Date de naissance :
-      <input formControlName="birthDate" type="date" [readonly]="!isEditing" />
-    </label>
-
-    <label>
-      Email :
-      <input formControlName="email" type="email" readonly class="readonly-field" />
-    </label>
-
-    <label>
-      Mot de passe :
-      <input formControlName="password" type="password" [readonly]="!isEditing" />
-    </label>
-
-    <div class="buttons">
-      <button type="button" *ngIf="!isEditing" (click)="enableEditing()">Modifier</button>
-      <button type="submit" *ngIf="isEditing" [disabled]="loading">Sauvegarder</button>
-      <button type="button" *ngIf="isEditing" (click)="onCancel()">Annuler</button>
+    <!-- Avatar -->
+    <div class="photo-section">
+      <img
+        *ngIf="previewUrl"
+        [src]="previewUrl"
+        alt="Photo utilisateur"
+        class="user-avatar"
+      />
+      <input
+        type="file"
+        (change)="onFileSelected($event)"
+        [disabled]="!isEditing"
+      />
     </div>
 
-  </form>
+    <!-- Form -->
+    <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="profile-form">
 
-</div>
-<hr />
+      <div class="form-group">
+        <label>Prénom</label>
+        <input formControlName="firstName" type="text" [readonly]="!isEditing" />
+      </div>
 
-<div class="history-section">
-  <h3 class="">🕒 Recettes consultées</h3>
+      <div class="form-group">
+        <label>Nom</label>
+        <input formControlName="lastName" type="text" [readonly]="!isEditing" />
+      </div>
 
-  <app-meal-history></app-meal-history>
-</div>
+      <div class="form-group">
+        <label>Date de naissance</label>
+        <input formControlName="birthDate" type="date" [readonly]="!isEditing" />
+      </div>
 
-<hr />
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          formControlName="email"
+          type="email"
+          readonly
+          class="readonly-field"
+        />
+      </div>
 
-<div class="favorites-section">
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input
+          formControlName="password"
+          type="password"
+          [readonly]="!isEditing"
+        />
+      </div>
 
-  <h3>⭐ Mes favoris</h3>
+      <!-- Buttons -->
+      <div class="buttons">
+        <button
+          type="button"
+          class="btn-primary"
+          *ngIf="!isEditing"
+          (click)="enableEditing()"
+        >
+          Modifier
+        </button>
 
-  <app-favorites [showTitle]="false"></app-favorites>
+        <button
+          type="submit"
+          class="btn-success"
+          *ngIf="isEditing"
+          [disabled]="loading"
+        >
+          Sauvegarder
+        </button>
+
+        <button
+          type="button"
+          class="btn-danger"
+          *ngIf="isEditing"
+          (click)="onCancel()"
+        >
+          Annuler
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <!-- FAVORITES -->
+  <section class="profile-section">
+    <h3>⭐ Mes favoris</h3>
+    <app-favorites [showTitle]="false"></app-favorites>
+  </section>
+
+
+  <!-- HISTORY -->
+  <section class="profile-section">
+    <h3>🕒 Recettes consultées</h3>
+    <app-meal-history></app-meal-history>
+  </section>
+
 </div>

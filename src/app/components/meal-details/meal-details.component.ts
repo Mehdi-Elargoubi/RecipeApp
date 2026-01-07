@@ -76,7 +76,7 @@ export class MealDetailsComponent implements OnInit {
   }
 
   // ⭐ Ajouter / retirer des favoris
-  async toggleFavorite(): Promise<void> {
+  async toggleFavorite0(): Promise<void> {
     if (!this.meal) return;
 
     try {
@@ -128,4 +128,32 @@ export class MealDetailsComponent implements OnInit {
       return isAlreadyNumbered ? s : `Step ${i + 1}: ${s}`;
     });
   }
+
+  async toggleFavorite(): Promise<void> {
+  if (!this.meal) return;
+
+  try {
+    if (this.isFavorite) {
+      await this.userService.removeFromFavorites(this.meal.idMeal);
+    } else {
+      await this.userService.addToFavorites(this.meal); // 🔥 meal COMPLET
+    }
+    this.isFavorite = !this.isFavorite;
+  } catch (err) {
+    console.error(err);
+    alert('Erreur lors de la gestion des favoris.');
+  }
+}
+
+// 🔹 Si tu modifies le meal (via Admin par exemple), appeler :
+async saveMealChanges(updatedMeal: Meal) {
+  // Mettre à jour globalement
+  await this.userService.updateFavoriteMealGlobally(updatedMeal);
+
+  // Si l'utilisateur actuel a ce meal, mettre à jour localement aussi
+  if (this.isFavorite) {
+    this.meal = updatedMeal;
+  }
+}
+
 }

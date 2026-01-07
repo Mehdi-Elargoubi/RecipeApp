@@ -1,30 +1,60 @@
 <div class="dashboard-container">
 
-  <!-- Barre de recherche en temps réel -->
+  <h2 class="dashboard-title">🔍 Recherche de recettes</h2>
+
+  <!-- Search bar -->
   <div class="search-bar">
-    <input type="text" 
-           placeholder="Rechercher une recette par nom"
-           (input)="onSearchInput($event)" />
+    <input
+      type="text"
+      placeholder="Rechercher une recette par nom..."
+      (input)="onSearchInput($event)"
+    >
   </div>
 
-  <!-- Affichage loading / erreur -->
-  <div *ngIf="loading" class="loading">Chargement des recettes...</div>
-  <div *ngIf="error" class="error">{{ error }}</div>
+  <!-- Loading / Error -->
+  <div *ngIf="loading" class="loading">
+    Chargement des recettes...
+  </div>
 
-  <!-- Liste des recettes -->
-  <div class="meals-container">
-    <div class="meal-card" *ngFor="let meal of meals" [routerLink]="['/meal', meal.idMeal]">
-      <img [src]="meal.strMealThumb" [alt]="meal.strMeal" />
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <!-- Meals Grid -->
+  <div class="meals-grid" *ngIf="!loading && !error">
+    <div
+      class="meal-card"
+      *ngFor="let meal of meals"
+      [routerLink]="['/meal', meal.idMeal]"
+    >
+
+      <img
+        [src]="meal.strMealThumb"
+        [alt]="meal.strMeal"
+      >
+
       <h3>{{ meal.strMeal }}</h3>
+
       <p><strong>Catégorie :</strong> {{ meal.strCategory }}</p>
       <p><strong>Origine :</strong> {{ meal.strArea }}</p>
 
       <h4>Ingrédients :</h4>
-      <ul>
-        <li *ngFor="let ing of meal.ingredients">{{ ing.measure }} {{ ing.name }}</li>
+      <ul class="ingredients-list">
+        <li *ngFor="let ing of meal.ingredients">
+          {{ ing.measure }} {{ ing.name }}
+        </li>
       </ul>
 
-      <a *ngIf="meal.strYoutube" [href]="meal.strYoutube" target="_blank">Voir la vidéo</a>
+      <a
+        *ngIf="meal.strYoutube"
+        class="btn-primary"
+        [href]="meal.strYoutube"
+        target="_blank"
+        (click)="$event.stopPropagation()"
+      >
+        🎬 Voir la vidéo
+      </a>
+
     </div>
   </div>
 

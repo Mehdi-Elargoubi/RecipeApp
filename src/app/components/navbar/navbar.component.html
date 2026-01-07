@@ -1,34 +1,50 @@
 <nav class="navbar">
-  <h2>Projet DevOps</h2>
 
-  <div class="nav-buttons">
+  <!-- LOGO -->
+  <div class="navbar-brand" routerLink="/">
+    🍽️ RecipeApp
+  </div>
+
+  <!-- LINKS -->
+  <div class="navbar-links">
 
     <!-- NON CONNECTÉ -->
     <ng-container *ngIf="!(user$ | async)">
-      <button routerLink="/login">Connexion</button>
-      <button routerLink="/signup">Inscription</button>
+      <a routerLink="/login" routerLinkActive="active">Connexion</a>
+      <a routerLink="/signup" routerLinkActive="active" class="btn-outline">
+        Inscription
+      </a>
     </ng-container>
 
     <!-- CONNECTÉ -->
     <ng-container *ngIf="user$ | async">
 
-      <button *ngIf="isAdmin" routerLink="/admin">
-        🔐 Admin Dashboard
+      <a *ngIf="isAdmin"
+         routerLink="/admin"
+         routerLinkActive="active"
+         class="admin-link">
+        🔐 Admin
+      </a>
+
+      <a routerLink="/all-meals" routerLinkActive="active">Recettes</a>
+      <a routerLink="/categories" routerLinkActive="active">Catégories</a>
+      <a routerLink="/areas" routerLinkActive="active">Régions</a>
+      <a routerLink="/ingredients" routerLinkActive="active">Ingrédients</a>
+      <a routerLink="/multi-ingredient-filter" routerLinkActive="active">
+        Multi-ingrédients
+      </a>
+
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/favorites" routerLinkActive="active">⭐ Favoris</a>
+      <a routerLink="/meal-history" routerLinkActive="active">📜 Historique</a>
+      <a routerLink="/profile" routerLinkActive="active">👤 Profil</a>
+
+      <button class="btn-logout" (click)="logout()">
+        Déconnexion
       </button>
 
-      <button routerLink="/all-meals">Toutes les recettes</button>
-      <button routerLink="/categories">Catégories</button>
-      <button routerLink="/areas">Régions</button>
-      <button routerLink="/ingredients">Ingrédients</button>
-      <button routerLink="/multi-ingredient-filter">Multi-ingrédients</button>
-
-      <button routerLink="/dashboard">Dashboard</button>
-      <button routerLink="/favorites">⭐ Favoris</button>
-      <button routerLink="/meal-history">📜 Historique</button>
-      <button routerLink="/profile">👤 Profil</button>
-
-      <button (click)="logout()">Déconnexion</button>
     </ng-container>
 
   </div>
+
 </nav>

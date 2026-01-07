@@ -1,27 +1,29 @@
 <div class="filter-container">
 
-  <h2 class="title">🧩 Filter by Multiple Ingredients</h2>
+  <h2 class="filter-title">🧩 Filtrer par ingrédients</h2>
 
-  <!-- INPUT -->
-  <input
-    type="text"
-    class="ingredient-input"
-    placeholder="Add ingredient..."
-    [(ngModel)]="ingredientSearch"
-    (input)="filterSuggestions()"
-  />
+  <!-- Search input -->
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Ajouter un ingrédient..."
+      [(ngModel)]="ingredientSearch"
+      (input)="filterSuggestions()"
+    />
+  </div>
 
-  <!-- AUTOCOMPLETE -->
+  <!-- Suggestions -->
   <div class="suggestions" *ngIf="suggestions.length > 0">
     <div
       class="suggestion"
       *ngFor="let ing of suggestions"
-      (click)="addIngredient(ing)">
+      (click)="addIngredient(ing)"
+    >
       {{ ing }}
     </div>
   </div>
 
-  <!-- SELECTED INGREDIENTS -->
+  <!-- Selected ingredients -->
   <div class="chips">
     <span class="chip" *ngFor="let ing of selectedIngredients">
       {{ ing }}
@@ -29,20 +31,35 @@
     </span>
   </div>
 
-  <!-- RESULTS -->
+  <!-- Results -->
   <div class="results">
 
-    <p *ngIf="loading" class="loading">Loading meals...</p>
-
-    <p *ngIf="!loading && filteredMeals.length === 0 && selectedIngredients.length > 0">
-      No meals match these ingredients.
+    <p *ngIf="loading" class="loading">
+      Chargement des recettes...
     </p>
 
-    <div class="meals-grid">
-      <a class="meal-card" *ngFor="let meal of filteredMeals" [routerLink]="['/meal', meal.idMeal]">
-        <img [src]="meal.strMealThumb" [alt]="meal.strMeal">
-        <h4>{{ meal.strMeal }}</h4>
-      </a>
+    <p
+      class="empty-state"
+      *ngIf="!loading && filteredMeals.length === 0 && selectedIngredients.length > 0"
+    >
+      Aucune recette ne correspond à ces ingrédients.
+    </p>
+
+    <div class="meals-grid" *ngIf="filteredMeals.length > 0">
+      <div
+        class="meal-card"
+        *ngFor="let meal of filteredMeals"
+        [routerLink]="['/meal', meal.idMeal]"
+      >
+
+        <img
+          [src]="meal.strMealThumb"
+          [alt]="meal.strMeal"
+        >
+
+        <h3>{{ meal.strMeal }}</h3>
+
+      </div>
     </div>
 
   </div>

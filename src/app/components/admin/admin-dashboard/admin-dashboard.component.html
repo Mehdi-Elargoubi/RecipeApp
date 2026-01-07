@@ -23,7 +23,7 @@
   <div class="stat-card">
     <span class="icon">📈</span>
     <div>
-      <p>Moyenne / user</p>
+      <p>Moyenne / utilisateur</p>
       <strong>{{ avgFavorites }}</strong>
     </div>
   </div>
@@ -37,7 +37,7 @@
 <h3>🏆 Top 3 catégories globales</h3>
 <ul class="top-categories">
   <li *ngFor="let cat of topCategories">
-    {{ cat.category }} ({{ cat.count }})
+    <strong>{{ cat.category }}</strong> — {{ cat.count }} favoris
   </li>
 </ul>
 
@@ -50,9 +50,16 @@
 <div class="bar-chart">
   <div class="bar-row" *ngFor="let entry of favoritesByUser | keyvalue">
     <span class="label">{{ entry.key }}</span>
+
     <div class="bar-container">
-      <div class="bar" [style.width.%]="(entry.value / getMaxValue(favoritesByUser)) * 100"></div>
+      <div
+        class="bar"
+        [style.width.%]="
+          (entry.value / getMaxValue(favoritesByUser)) * 100
+        ">
+      </div>
     </div>
+
     <span class="value">{{ entry.value }}</span>
   </div>
 </div>
@@ -66,9 +73,16 @@
 <div class="bar-chart">
   <div class="bar-row" *ngFor="let entry of favoritesByCategory | keyvalue">
     <span class="label">{{ entry.key }}</span>
+
     <div class="bar-container">
-      <div class="bar category" [style.width.%]="(entry.value / getMaxValue(favoritesByCategory)) * 100"></div>
+      <div
+        class="bar category"
+        [style.width.%]="
+          (entry.value / getMaxValue(favoritesByCategory)) * 100
+        ">
+      </div>
     </div>
+
     <span class="value">{{ entry.value }}</span>
   </div>
 </div>
@@ -79,38 +93,35 @@
      CATEGORIE PREFEREE PAR USER
 ====================== -->
 <h3>🍴 Catégorie préférée par utilisateur</h3>
+
 <table class="preferred-category-table">
   <tr>
     <th>Utilisateur</th>
     <th>Catégorie préférée</th>
-    <th>Nombre de favoris</th>
+    <th>Total favoris</th>
   </tr>
+
   <tr *ngFor="let user of users">
-    <td>{{ user.firstName }} {{ user.lastName }}</td>
-    <td>{{ favoriteMainCategoryMap[user.uid] || 'Aucune' }}</td>
-    <td>{{ favoritesCountMap[user.uid] || 0 }}</td>
+    <td>
+      {{ user.firstName }} {{ user.lastName }}
+    </td>
+    <td>
+      {{ favoriteMainCategoryMap[user.uid] || 'Aucune' }}
+    </td>
+    <td>
+      {{ favoritesCountMap[user.uid] || 0 }}
+    </td>
   </tr>
 </table>
 
+<hr />
 
+<!-- ======================
+     GESTION DES UTILISATEURS
+====================== -->
+<h3>👥 Gestion des utilisateurs</h3>
 
-<hr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h3>Gestion des utilisateurs</h3>
-<table>
+<table class="admin-table">
   <tr>
     <th>Email</th>
     <th>Nom</th>
@@ -126,48 +137,117 @@
     <td>{{ u.role || 'user' }}</td>
     <td>{{ favoritesCountMap[u.uid] || 0 }}</td>
     <td>
-      {{ favoriteCategoriesMap[u.uid].length
-        ? favoriteCategoriesMap[u.uid].join(', ')
-        : 'Aucune' }}
+      {{
+        favoriteCategoriesMap[u.uid].length
+          ? favoriteCategoriesMap[u.uid].join(', ')
+          : 'Aucune'
+      }}
     </td>
-    <td>
+    <td class="actions">
       <button (click)="toggleAdminRole(u)">
         {{ u.role === 'admin' ? 'Retirer admin' : 'Rendre admin' }}
       </button>
-      <button (click)="deleteUser(u.uid)">Supprimer</button>
+      <button class="danger" (click)="deleteUser(u.uid)">
+        Supprimer
+      </button>
     </td>
   </tr>
 </table>
 
 <hr />
 
-<h3>Gestion des meals favoris par utilisateur</h3>
+<!-- ======================
+     GESTION DES FAVORIS (MEALS)
+====================== -->
+<h3>🍔 Gestion des meals favoris</h3>
 
-<div *ngFor="let u of users">
+<div *ngFor="let u of users" class="user-meals">
   <h4>{{ u.firstName }} {{ u.lastName }}</h4>
 
-  <table *ngIf="userMealsMap[u.uid]?.length; else noFav">
-    <tr>
-      <th>Nom</th>
-      <th>Catégorie</th>
-      <th>Actions</th>
-    </tr>
+<table *ngIf="userMealsMap[u.uid]?.length; else noFav">
+  <tr>
+    <th>Meal</th>
+    <th>Catégorie</th>
+    <th>Note</th>
+    <th>Actions</th>
+  </tr>
 
-    <tr *ngFor="let m of userMealsMap[u.uid]">
-      <td>
-        <a [routerLink]="['/meal', m.idMeal]" class="meal-link">
-          {{ m.strMeal }}
-        </a>
-      </td>
-      <td>{{ m.strCategory }}</td>
-      <td>
-        <button (click)="editMeal(u.uid, m)">Modifier</button>
-        <button (click)="deleteMeal(u.uid, m.idMeal)">Supprimer</button>
-      </td>
-    </tr>
-  </table>
+  <tr *ngFor="let m of userMealsMap[u.uid]">
+    <td>
+      <a [routerLink]="['/meal', m.idMeal]" class="meal-link">
+        {{ m.strMeal }}
+      </a>
+    </td>
+
+    <td>{{ m.strCategory }}</td>
+
+    <!-- ⭐ NOUVELLE COLONNE -->
+    <td class="admin-note">
+      {{ m.note || '—' }}
+    </td>
+
+    <td>
+      <!-- 🔥 MODIFICATION GLOBALE -->
+      <button (click)="openEditMealModal(m)">Modifier</button>
+
+      <!-- ❌ SUPPRESSION LOCALE -->
+      <button class="danger" (click)="deleteMeal(u.uid, m.idMeal)">
+        Supprimer
+      </button>
+    </td>
+  </tr>
+</table>
+
 
   <ng-template #noFav>
-    <p>Aucun favori</p>
+    <p class="empty">Aucun favori</p>
   </ng-template>
+</div>
+
+
+<!-- ======================
+     MODAL ÉDITION MEAL
+====================== -->
+<div class="modal-backdrop" *ngIf="showEditModal">
+  <div class="modal">
+
+    <h3>✏️ Modifier le meal</h3>
+
+    <div class="form-group">
+      <label>Nom du meal</label>
+      <input
+        type="text"
+        [(ngModel)]="editName"
+        placeholder="Nom du meal"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Catégorie</label>
+      <input
+        type="text"
+        [(ngModel)]="editCategory"
+        placeholder="Catégorie"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Note admin (optionnelle)</label>
+      <textarea
+        rows="3"
+        [(ngModel)]="editNote"
+        placeholder="Note interne"
+      ></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="secondary" (click)="closeEditMealModal()">
+        Annuler
+      </button>
+      <button class="primary" (click)="saveMealEdit()">
+        Sauvegarder
+      </button>
+    </div>
+
+  </div>
 </div>
