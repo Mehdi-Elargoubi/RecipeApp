@@ -22,16 +22,16 @@ table {
   border-collapse: collapse;
   margin-bottom: 25px;
   background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 th {
   background-color: #1e88e5;
   color: white;
-  text-align: left;
   padding: 12px;
+  text-align: left;
   font-size: 14px;
 }
 
@@ -53,20 +53,18 @@ button {
   border-radius: 6px;
   font-size: 13px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: opacity 0.2s;
 }
 
 button:hover {
   opacity: 0.85;
 }
 
-/* Admin / User */
 button:first-child {
   background-color: #43a047;
   color: white;
 }
 
-/* Delete */
 button:last-child {
   background-color: #e53935;
   color: white;
@@ -81,18 +79,16 @@ button:last-child {
   border-radius: 8px;
 }
 
-/* Empty favorites */
 .empty {
   color: #888;
   font-style: italic;
-  padding: 10px 0;
 }
 
 .meal-link {
   cursor: pointer;
   color: #ff7043;
-  text-decoration: none;
   font-weight: 500;
+  text-decoration: none;
 }
 
 .meal-link:hover {
@@ -107,27 +103,7 @@ button:last-child {
   background-color: #f7f7f7;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 🔹 STATS CARDS */
+/* ===== STATS CARDS ===== */
 .stats-grid {
   display: flex;
   gap: 20px;
@@ -136,12 +112,12 @@ button:last-child {
 
 .stat-card {
   flex: 1;
-  background: #f8f9fb;
-  padding: 16px 20px;
-  border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 15px;
+  background: #f8f9fb;
+  padding: 16px 20px;
+  border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
@@ -151,15 +127,15 @@ button:last-child {
 
 .stat-card p {
   margin: 0;
-  color: #666;
   font-size: 14px;
+  color: #666;
 }
 
 .stat-card strong {
   font-size: 24px;
 }
 
-/* 🔹 BAR CHART */
+/* ===== BAR CHART ===== */
 .bar-chart {
   max-width: 900px;
   margin: 20px 0 40px;
@@ -179,8 +155,8 @@ button:last-child {
 
 .bar-container {
   flex: 1;
-  background: #e5e7eb;
   height: 14px;
+  background: #e5e7eb;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -188,7 +164,6 @@ button:last-child {
 .bar {
   height: 100%;
   background: linear-gradient(90deg, #4f46e5, #6366f1);
-  border-radius: 8px;
   transition: width 0.4s ease;
 }
 
@@ -202,101 +177,11 @@ button:last-child {
   font-size: 13px;
 }
 
-
-
-.stats-grid {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.stat-card {
-  display: flex;
-  align-items: center;
-  background: #f0f0f0;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  flex: 1;
-}
-
-.stat-card .icon {
-  font-size: 2rem;
-  margin-right: 1rem;
-}
-
-.bar-chart {
-  margin: 1rem 0;
-}
-
-.bar-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.bar-row .label {
-  width: 150px;
-}
-
-.bar-container {
-  flex: 1;
-  background: #eee;
-  border-radius: 4px;
-  margin: 0 0.5rem;
-  height: 20px;
-  overflow: hidden;
-}
-
-.bar {
-  height: 100%;
-  background: #4caf50;
-  border-radius: 4px 0 0 4px;
-}
-
-.bar.category {
-  background: #2196f3;
-}
-
-.bar-row .value {
-  width: 30px;
-  text-align: right;
-}
-
-.top-categories {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 1rem;
-}
-
-.top-categories li {
-  background: #ffeb3b;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: bold;
-}
-
-.preferred-category-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.preferred-category-table th,
-.preferred-category-table td {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.preferred-category-table th {
-  background: #f5f5f5;
-}
-
+/* ===== MODAL ===== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.5);
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -308,7 +193,7 @@ button:last-child {
   padding: 24px;
   width: 420px;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
 
 .form-group {
@@ -338,16 +223,14 @@ button:last-child {
 .primary {
   background: #007bff;
   color: white;
-  border: none;
-  padding: 8px 14px;
   border-radius: 6px;
+  padding: 8px 14px;
 }
 
 .secondary {
   background: #ddd;
-  border: none;
-  padding: 8px 14px;
   border-radius: 6px;
+  padding: 8px 14px;
 }
 
 .admin-note {
