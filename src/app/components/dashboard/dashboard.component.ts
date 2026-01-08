@@ -23,8 +23,8 @@ export class DashboardComponent implements OnInit {
 
     // Recherche en temps réel avec debounce
     this.searchSubject.pipe(
-      debounceTime(500),           // attendre 500ms après la dernière frappe
-      distinctUntilChanged()       // ignorer les valeurs identiques consécutives
+      debounceTime(500),           
+      distinctUntilChanged()       
     ).subscribe(searchText => {
       this.loading = true;
       this.api.searchMealByName(searchText).subscribe({

@@ -90,14 +90,14 @@ export class MultiIngredientFilterComponent implements OnInit {
       this.selectedIngredients.filter(i => i !== ingredient);
 
     this.applyFilter();
-    this.updateUrl(); // 👈 AJOUT
+    this.updateUrl();
   }
 
-  // 🍽️ Filtrer les repas
+  // Filtrer les repas
   applyFilter(): void {
     if (this.selectedIngredients.length === 0) {
       this.filteredMeals = [];
-      this.updateUrl(); // URL propre si vide
+      this.updateUrl(); 
       return;
     }
 

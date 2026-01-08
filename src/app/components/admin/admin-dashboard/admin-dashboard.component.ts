@@ -9,18 +9,14 @@ import { Meal } from '../../../models/meal.model';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  // ======================
-  // 🔹 USERS & FAVORITES
-  // ======================
+  // USERS & FAVORITES
   users: any[] = [];
   userMealsMap: { [uid: string]: Meal[] } = {};
   favoritesCountMap: { [uid: string]: number } = {};
   favoriteCategoriesMap: { [uid: string]: string[] } = {};
   favoriteMainCategoryMap: { [uid: string]: string } = {};
 
-  // ======================
-  // 🔹 GLOBAL STATS
-  // ======================
+  // GLOBAL STATS
   totalUsers = 0;
   totalFavorites = 0;
   avgFavorites = 0;
@@ -29,9 +25,7 @@ export class AdminDashboardComponent implements OnInit {
   favoritesByUser: { [key: string]: number } = {};
   topCategories: { category: string, count: number }[] = [];
 
-  // ======================
-  // 🔹 MODAL EDIT
-  // ======================
+  // MODAL EDIT
   showEditModal = false;
   editingMeal: Meal | null = null;
   editName = '';
@@ -44,9 +38,7 @@ export class AdminDashboardComponent implements OnInit {
     await this.loadUsers();
   }
 
-  // ======================
-  // 🔹 LOAD USERS + STATS
-  // ======================
+  // LOAD USERS + STATS
   async loadUsers() {
     this.users = await this.userService.getAllUsers();
 
@@ -97,9 +89,7 @@ export class AdminDashboardComponent implements OnInit {
       .map(([category, count]) => ({ category, count }));
   }
 
-  // ======================
-  // 🔹 UTILS
-  // ======================
+  // UTILS
   getFavoriteCategories(favorites: Meal[]): string[] {
     const counter: { [key: string]: number } = {};
     favorites.forEach(m => {
@@ -120,9 +110,7 @@ export class AdminDashboardComponent implements OnInit {
     return Math.max(...Object.values(map), 1);
   }
 
-  // ======================
-  // 🔹 ADMIN ACTIONS
-  // ======================
+  // ADMIN ACTIONS
   async toggleAdminRole(user: any) {
     await this.userService.setUserRole(
       user.uid,
@@ -145,9 +133,7 @@ export class AdminDashboardComponent implements OnInit {
     await this.loadUsers();
   }
 
-  // ======================
-  // 🔥 MODAL EDIT MEAL
-  // ======================
+  // MODAL EDIT MEAL
   openEditMealModal(meal: Meal) {
     this.editingMeal = meal;
     this.editName = meal.strMeal;

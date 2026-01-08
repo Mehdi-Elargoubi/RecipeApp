@@ -36,7 +36,7 @@ export class MealDetailsComponent implements OnInit {
     this.loading = true;
 
     try {
-      // 1️⃣ Essayer Firestore (favoris)
+      // Essayer Firestore (favoris)
       const favoriteMeal = await this.userService.getFavoriteMealById(mealId);
 
       if (favoriteMeal) {
@@ -50,14 +50,14 @@ export class MealDetailsComponent implements OnInit {
         return;
       }
 
-      // 2️⃣ Sinon → API
+      // Sinon → API
       this.api.getMealById(mealId).subscribe({
         next: async (data) => {
           this.meal = data;
 
           this.isFavorite = await this.userService.isFavorite(mealId);
 
-          // ⭐ Enregistrer comme meal visité
+          // Enregistrer comme meal visité
           await this.userService.addVisitedMeal(this.meal);
 
           this.loading = false;
@@ -75,7 +75,7 @@ export class MealDetailsComponent implements OnInit {
     }
   }
 
-  // ⭐ Ajouter / retirer des favoris
+  // Ajouter / retirer des favoris
   async toggleFavorite0(): Promise<void> {
     if (!this.meal) return;
 

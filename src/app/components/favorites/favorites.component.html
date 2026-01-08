@@ -1,6 +1,6 @@
 <div class="favorites-container">
 
-  <h2 *ngIf="showTitle">⭐ Mes Favoris</h2>
+  <h2 *ngIf="showTitle">Mes Favoris</h2>
 
   <div *ngIf="loading" class="loading">Chargement...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
@@ -22,7 +22,7 @@
       </h4>
 
       <button class="remove-btn" (click)="remove(meal.idMeal)">
-        ❌ Retirer
+        Retirer
       </button>
     </div>
   </div>

@@ -1,8 +1,5 @@
-<h2>📊 Admin Dashboard</h2>
+<h2>Admin Dashboard</h2>
 
-<!-- ======================
-     STATS GLOBALES
-====================== -->
 <div class="stats-grid">
   <div class="stat-card">
     <span class="icon">👥</span>
@@ -31,10 +28,7 @@
 
 <hr />
 
-<!-- ======================
-     TOP 3 CATEGORIES
-====================== -->
-<h3>🏆 Top 3 catégories globales</h3>
+<h3>Top 3 catégories globales</h3>
 <ul class="top-categories">
   <li *ngFor="let cat of topCategories">
     <strong>{{ cat.category }}</strong> — {{ cat.count }} favoris
@@ -43,10 +37,7 @@
 
 <hr />
 
-<!-- ======================
-     FAVORIS PAR UTILISATEUR
-====================== -->
-<h3>👤 Favoris par utilisateur</h3>
+<h3>Favoris par utilisateur</h3>
 <div class="bar-chart">
   <div class="bar-row" *ngFor="let entry of favoritesByUser | keyvalue">
     <span class="label">{{ entry.key }}</span>
@@ -66,10 +57,7 @@
 
 <hr />
 
-<!-- ======================
-     FAVORIS PAR CATEGORIE
-====================== -->
-<h3>🍽️ Favoris par catégorie</h3>
+<h3>Favoris par catégorie</h3>
 <div class="bar-chart">
   <div class="bar-row" *ngFor="let entry of favoritesByCategory | keyvalue">
     <span class="label">{{ entry.key }}</span>
@@ -89,10 +77,7 @@
 
 <hr />
 
-<!-- ======================
-     CATEGORIE PREFEREE PAR USER
-====================== -->
-<h3>🍴 Catégorie préférée par utilisateur</h3>
+<h3>Catégorie préférée par utilisateur</h3>
 
 <table class="preferred-category-table">
   <tr>
@@ -116,10 +101,7 @@
 
 <hr />
 
-<!-- ======================
-     GESTION DES UTILISATEURS
-====================== -->
-<h3>👥 Gestion des utilisateurs</h3>
+<h3>Gestion des utilisateurs</h3>
 
 <table class="admin-table">
   <tr>
@@ -156,10 +138,7 @@
 
 <hr />
 
-<!-- ======================
-     GESTION DES FAVORIS (MEALS)
-====================== -->
-<h3>🍔 Gestion des meals favoris</h3>
+<h3>Gestion des meals favoris</h3>
 
 <div *ngFor="let u of users" class="user-meals">
   <h4>{{ u.firstName }} {{ u.lastName }}</h4>
@@ -181,16 +160,13 @@
 
     <td>{{ m.strCategory }}</td>
 
-    <!-- ⭐ NOUVELLE COLONNE -->
     <td class="admin-note">
       {{ m.note || '—' }}
     </td>
 
     <td>
-      <!-- 🔥 MODIFICATION GLOBALE -->
       <button (click)="openEditMealModal(m)">Modifier</button>
 
-      <!-- ❌ SUPPRESSION LOCALE -->
       <button class="danger" (click)="deleteMeal(u.uid, m.idMeal)">
         Supprimer
       </button>
@@ -205,13 +181,10 @@
 </div>
 
 
-<!-- ======================
-     MODAL ÉDITION MEAL
-====================== -->
 <div class="modal-backdrop" *ngIf="showEditModal">
   <div class="modal">
 
-    <h3>✏️ Modifier le meal</h3>
+    <h3>Modifier le meal</h3>
 
     <div class="form-group">
       <label>Nom du meal</label>

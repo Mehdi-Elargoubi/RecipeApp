@@ -52,44 +52,4 @@ export class LoginComponent {
     }
   }
 
-
-
-  // async login() {
-  //   this.authService.login(this.email, this.password).subscribe({
-  //     next: res => {
-  //       console.log('Connecté', res);
-  //       this.router.navigate(['/']); // ou autre route sécurisée
-  //     },
-  //     error: err => alert('Erreur de connexion: ' + err.message)
-  //   });
-  // }
-
-  // async register() {
-  //   this.authService.register({ email: this.email, password: this.password }).subscribe({
-  //     next: res => {
-  //       alert('Compte créé');
-  //       this.router.navigate(['/']);
-  //     },
-  //     error: err => alert('Erreur inscription: ' + err.message)
-  //   });
-  // }
-
-  // async reset() {
-  //   this.authService.resetPassword(this.email).subscribe({
-  //     next: () => alert('Email de réinitialisation envoyé'),
-  //     error: err => alert('Erreur: ' + err.message)
-  //   });
-  // }
-
-
-  // async loginWithGoogle() {
-  //   this.authService.loginWithGoogle().subscribe({
-  //     next: res => {
-  //       console.log('Google login', res);
-  //       this.router.navigate(['/']);
-  //     },
-  //     error: err => alert('Erreur Google: ' + err.message)
-  //   });
-  // }
-
 }

@@ -30,7 +30,7 @@ export class IngredientsListComponent {
       next: (data) => {
         this.ingredients = data;
 
-        // 👉 afficher tout dès le début
+        // afficher tout dès le début
         this.filteredIngredients = this.ingredients;
 
         this.loading = false;
