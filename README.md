@@ -27,7 +27,7 @@ graph TD
     Client[💻 Utilisateur / Navigateur] -->|Interagit avec| AngularApp
 
     subgraph "Frontend (Angular 17)"
-        AngularApp(🖥️ Application DevOpsAPI-EILCO)
+        AngularApp(🖥️ Application RecipeApp)
         Components(🧩 Composants UI) --- AngularApp
         Guards(🛡️ Guards Auth/Admin) --- AngularApp
         Services(⚙️ Services Métier) --- AngularApp
@@ -101,8 +101,8 @@ Assurez-vous d'avoir installé :
 
 ### 2. Cloner et Installer
 ```bash
-git clone https://github.com/VOTRE_NOM/DevOpsAPI-EILCO.git
-cd DevOpsAPI-EILCO
+git clone https://github.com/VOTRE_NOM/RecipeApp.git
+cd RecipeApp
 npm install
 ```
 
@@ -143,7 +143,7 @@ Pour générer une version de production optimisée :
 ```bash
 npm run build
 ```
-*(Le code compilé se trouvera dans le dossier `dist/devopsapi-eilco/`)*
+*(Le code compilé se trouvera dans le dossier `dist/recipe-app/`)*
 
 **Déployer sur Firebase Hosting :**
 Assurez-vous d'avoir installé le CLI Firebase et de vous être connecté (`firebase login`), puis lancez :
@@ -153,5 +153,5 @@ firebase deploy --only hosting
 
 ---
 <div align="center">
-  <i>Développé avec passion 🔥 dans le cadre du projet DevOpsAPI-EILCO.</i>
+  <i>Développé avec passion 🔥 dans le cadre du projet RecipeApp.</i>
 </div>
