@@ -52,4 +52,3 @@ src/environments/environment.development.ts
 .env
 .env.local
 .env.*.local
-src/environments/environment.development.ts
