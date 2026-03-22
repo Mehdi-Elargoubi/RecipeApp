@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="src/assets/logo.png" alt="RecipeApp Logo" width="150" />
   <h1>🍽️ RecipeApp</h1>
   <p>Une application web moderne, intelligente et sécurisée de découverte culinaire.</p>
 
